@@ -8,4 +8,9 @@ public class Tile : MonoBehaviour
     {
         return tileType;
     }
+
+    public void SetTileType(TileType_SO _tileType)
+    { 
+        tileType = _tileType; 
+    }
 }
