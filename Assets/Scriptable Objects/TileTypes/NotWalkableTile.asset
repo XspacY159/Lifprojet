@@ -15,3 +15,4 @@ MonoBehaviour:
   tileName: NotWalkable
   walkable: 0
   movingSpeedCoeff: 1
+  tileMaterial: {fileID: 2100000, guid: 91a2b882ac3f49f4dbd3eb6b2a5d52f0, type: 2}
