@@ -16,6 +16,12 @@ public class TerrainManagerDrawer : Editor
         Selection.selectionChanged += PaintTile;
     }
 
+    private void OnDisable()
+    {
+        draw = false;
+        Selection.selectionChanged -= PaintTile;
+    }
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -64,9 +70,13 @@ public class TerrainManagerDrawer : Editor
             return;
         }
 
+
         Undo.RecordObject(currentSelectedTile, "Painted Tile");
         Undo.RecordObject(meshRenderer, "Painted Tile");
-        currentSelectedTile.SetTileType(tileTypeBrush);
-        meshRenderer.sharedMaterial = tileTypeBrush.tileMaterial;
+
+        if(currentSelectedTile.GetTileType() != tileTypeBrush)
+            currentSelectedTile.SetTileType(tileTypeBrush);
+        if(meshRenderer.sharedMaterial != tileTypeBrush.tileMaterial)
+            meshRenderer.sharedMaterial = tileTypeBrush.tileMaterial;
     }
 }
