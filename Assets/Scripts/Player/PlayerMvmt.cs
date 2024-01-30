@@ -5,10 +5,16 @@ public class PlayerMvmt : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float speed;
     private float currentSpeedCoeff;
+    [SerializeField] private POI testPOI;
     private void Update()
     {
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
         Tile currentTile = TerrainManager.Instance.GetTile(currentPos);
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            testPOI.Interact(transform);
+        }
 
         if (currentTile == null) return;
         currentSpeedCoeff = currentTile.GetTileType().movingSpeedCoeff;
