@@ -12,7 +12,7 @@ public class PlayerMvmt : MonoBehaviour
 
         if (currentTile == null) return;
         currentSpeedCoeff = currentTile.GetTileType().movingSpeedCoeff;
-        Debug.Log(currentTile.GetTileType().tileName);
+        //Debug.Log(currentTile.GetTileType().tileName);
     }
     private void FixedUpdate()
     {
