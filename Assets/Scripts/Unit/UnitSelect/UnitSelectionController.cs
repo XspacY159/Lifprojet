@@ -26,6 +26,7 @@ public class UnitSelectionController : MonoBehaviour
     {
         DeselectAll();
         unitsSelected.Add(unitToAdd);
+        unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
     }
 
     public void ShiftSelect(GameObject unitToAdd)   //player selects many units with shift pressed
@@ -33,20 +34,30 @@ public class UnitSelectionController : MonoBehaviour
         if (!unitsSelected.Contains(unitToAdd))
         {
             unitsSelected.Add(unitToAdd);
+            unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
         }
         else
         {
+            unitToAdd.transform.GetChild(0).gameObject.SetActive(false); //deactivates the highlight object
             unitsSelected.Remove(unitToAdd);
         }
     }
 
     public void DragSelect(GameObject unitToAdd)    //player selects many units with dragged box
     {
-
+        if(!unitsSelected.Contains(unitToAdd))  //the unit is not yet in the selected list
+        {
+            unitsSelected.Add(unitToAdd);
+            unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
+        }
     }
 
     public void DeselectAll()
     {
+        foreach (var unit in unitsSelected)
+        {
+            unit.transform.GetChild(0).gameObject.SetActive(false); //deactivates the highlight object
+        }
         unitsSelected.Clear();
     }
 

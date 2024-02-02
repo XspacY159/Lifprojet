@@ -14,6 +14,7 @@ public class UnitGeneral : MonoBehaviour
     void Start()
     {
         UnitSelectionController.Instance.unitsList.Add(this.gameObject);
+        this.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     void OnDestroy()
