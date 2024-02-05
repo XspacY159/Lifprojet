@@ -3,14 +3,15 @@ using UnityEngine;
 
 public class UnitSelectionController : MonoBehaviour
 {
-    public List<GameObject> unitsList = new List<GameObject>();
-    public List<GameObject> unitsSelected = new List<GameObject>();
+    public Dictionary<GameObject, UnitGeneral> unitsList { get; private set; } 
+        = new Dictionary<GameObject, UnitGeneral>(); //Dictionnary of player's units
+    private List<UnitGeneral> unitsSelected = new List<UnitGeneral>();
 
     // singleton of the selection
     private static UnitSelectionController _instance;
-    public static UnitSelectionController Instance {  get { return _instance; } }
+    public static UnitSelectionController Instance { get { return _instance; } }
 
-    private void Awake()
+    private void OnEnable()
     {
         if (_instance != null && _instance != this)
         {
@@ -22,32 +23,60 @@ public class UnitSelectionController : MonoBehaviour
         }
     }
 
+    public List<UnitGeneral> GetUnitsSelected()
+    {
+        return unitsSelected; 
+    }
+
+    public void AddUnit(UnitGeneral unit)
+    {
+        if(!unitsList.ContainsKey(unit.gameObject))
+            unitsList.Add(unit.gameObject, unit);
+    }
+
+    public void RemoveUnit(UnitGeneral unit)
+    {
+        if (unitsList.ContainsKey(unit.gameObject))
+            unitsList.Remove(unit.gameObject);
+    }
+
+    public List<UnitGeneral> GetSelectedUnits()
+    {
+        return unitsSelected;
+    }
+
     public void ClickSelect(GameObject unitToAdd)   //player selects only one unit
     {
         DeselectAll();
-        unitsSelected.Add(unitToAdd);
+        if (!unitsList.ContainsKey(unitToAdd)) return;
+        unitsSelected.Add(unitsList[unitToAdd]);
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
     }
 
     public void ShiftSelect(GameObject unitToAdd)   //player selects many units with shift pressed
     {
-        if (!unitsSelected.Contains(unitToAdd))
+        if (!unitsList.ContainsKey(unitToAdd)) return;
+
+        if (!unitsSelected.Contains(unitsList[unitToAdd]))
         {
-            unitsSelected.Add(unitToAdd);
+            unitsSelected.Add(unitsList[unitToAdd]);
             unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
         }
         else
         {
             unitToAdd.transform.GetChild(0).gameObject.SetActive(false); //deactivates the highlight object
-            unitsSelected.Remove(unitToAdd);
+            if (!unitsList.ContainsKey(unitToAdd)) return;
+            unitsSelected.Remove(unitsList[unitToAdd]);
         }
     }
 
     public void DragSelect(GameObject unitToAdd)    //player selects many units with dragged box
     {
-        if(!unitsSelected.Contains(unitToAdd))  //the unit is not yet in the selected list
+        if (!unitsList.ContainsKey(unitToAdd)) return;
+
+        if (!unitsSelected.Contains(unitsList[unitToAdd]))  //the unit is not yet in the selected list
         {
-            unitsSelected.Add(unitToAdd);
+            unitsSelected.Add(unitsList[unitToAdd]);
             unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
         }
     }

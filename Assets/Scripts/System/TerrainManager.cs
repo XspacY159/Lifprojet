@@ -51,6 +51,11 @@ public class TerrainManager : MonoBehaviour
         return null;
     }
 
+    public Tile GetTile(int index)
+    {
+        return tilesList[index];
+    }
+
     public Vector2 GetTilesSize()
     {
         return tilesSize;
@@ -59,6 +64,11 @@ public class TerrainManager : MonoBehaviour
     public Vector2 GetTerrainSize()
     {
         return terrainSize;
+    }
+
+    public int GetTilesCount()
+    {
+        return tilesList.Count;
     }
 
     public void GenerateTerrain(Vector2 _tarrainSize, Vector2 _tileSize)

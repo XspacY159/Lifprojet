@@ -8,8 +8,8 @@ public class UnitDragSelect : MonoBehaviour
 
     private Rect selectionBox;          //used for the logic of the box
 
-    Vector2 startPosition;
-    Vector2 endPosition;
+    private Vector2 startPosition;
+    private Vector2 endPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +44,7 @@ public class UnitDragSelect : MonoBehaviour
     }
     
     //draws the selection box to the screen
-    void DrawVisual()
+    private void DrawVisual()
     {
         Vector2 boxStart = startPosition;
         Vector2 boxEnd = endPosition;
@@ -57,7 +57,7 @@ public class UnitDragSelect : MonoBehaviour
     }
 
     //computes the logic of the selection box
-    void DrawSelection()
+    private void DrawSelection()
     {
         //we need to know in which direction the box is dragged to correctly compute
         if(Input.mousePosition.x < startPosition.x) //dragging left
@@ -82,13 +82,13 @@ public class UnitDragSelect : MonoBehaviour
         }
     }
 
-    void SelectUnits()
+    private void SelectUnits()
     {
-        foreach (var unit in UnitSelectionController.Instance.unitsList) //we go through all the units that can be selected
+        foreach (var unit in UnitSelectionController.Instance.unitsList.Values) //we go through all the units that can be selected
         {
             if (selectionBox.Contains(myCam.WorldToScreenPoint(unit.transform.position))) //the position of the unit is project to the camera, and checked if in the box
             {
-                UnitSelectionController.Instance.DragSelect(unit);
+                UnitSelectionController.Instance.DragSelect(unit.gameObject);
             }
         }
     }

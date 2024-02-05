@@ -4,8 +4,8 @@ public class UnitClickSelect : MonoBehaviour
 {
     private Camera myCam;
 
-    public LayerMask clickable;
-    public LayerMask ground;
+    [SerializeField] private LayerMask clickable;
+    [SerializeField] private LayerMask ground;
 
     // Start is called before the first frame update
     void Start()

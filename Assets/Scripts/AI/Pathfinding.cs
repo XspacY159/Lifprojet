@@ -4,21 +4,20 @@ using Unity.Burst;
 using Unity.Mathematics;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Tilemaps;
 using Unity.VisualScripting;
 using System;
+using System.Collections;
 
 public class Pathfinding : MonoBehaviour
 {
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 24;
 
-    [SerializeField] private Transform target;
+    [SerializeField] private Vector3 target;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private List<Tile> tileGrid;
     [SerializeField] private bool enablePathfinding;
     [SerializeField] private bool showCalculationTime;
-    [SerializeField] private float followSpeed = 3;
     [SerializeField] private float pathUpdateTime = 2;
 
     private int currentWaypointIndex = 0;
@@ -27,27 +26,70 @@ public class Pathfinding : MonoBehaviour
     private List<Vector2> obstacles = new List<Vector2>();
     private Guid pathfindingID = new Guid();
 
+    public event Action OnPathfindingUpdate;
+
+    private void OnEnable()
+    {
+        StartCoroutine(OnEnableDelay());
+    }
+
+    private IEnumerator OnEnableDelay()
+    {
+        yield return new WaitUntil(() => TerrainManager.Instance != null);
+
+        for (int i = 0; i < TerrainManager.Instance.GetTilesCount(); i++)
+        {
+            tileGrid.Add(TerrainManager.Instance.GetTile(i));
+        }
+    }
+
     private void Update()
     {
-        if (!enablePathfinding) return;
+        if (!enablePathfinding)
+        {
+            TimerManager.Cancel("PathFindUpdate" + pathfindingID);
+            currentPath.Clear();    
+            return;
+        }
 
         if(!TimerManager.StartTimer(pathUpdateTime, "PathFindUpdate" + pathfindingID))
         {
             currentPath = GetPath(new Vector2(transform.position.x, transform.position.z),
-                new Vector2(target.position.x, target.position.z));
+                new Vector2(target.x, target.z));
             currentWaypointIndex = 1;
+            OnPathfindingUpdate?.Invoke();
         }
-    }
 
-    private void FixedUpdate()
-    {
-        if (!enablePathfinding) return;
         if (currentPath.Count == 0) return;
 
-        if (transform.position == currentPath[currentWaypointIndex])
+        if (transform.position == currentPath[currentWaypointIndex] && currentWaypointIndex < currentPath.Count - 1)
             currentWaypointIndex++;
 
-        transform.position = Vector3.MoveTowards(transform.position, currentPath[currentWaypointIndex], followSpeed * Time.fixedDeltaTime);
+        if (currentWaypointIndex >= currentPath.Count - 1 && transform.position == currentPath[currentPath.Count - 1])
+            enablePathfinding = false;
+    }
+
+    public void SetTarget(Vector3 _target, bool _enablePathfinding = true)
+    {
+        target = _target;
+        enablePathfinding = _enablePathfinding;
+        currentWaypointIndex = 1;
+        TimerManager.Cancel("PathFindUpdate" + pathfindingID);
+    }
+
+    public void StopPathfiding()
+    {
+        enablePathfinding = false;
+    }
+
+    public List<Vector3> GetCurrentPath()
+    { 
+        return currentPath; 
+    }
+
+    public int GetCurrentWaypointIndex()
+    { 
+        return currentWaypointIndex;
     }
 
     private List<Vector3> GetPath(Vector2 currentPos, Vector2 _target)
@@ -99,7 +141,7 @@ public class Pathfinding : MonoBehaviour
         if (res.Count >= 2)
         {
             res[0] = transform.position;
-            res[res.Count - 1] = target.position;
+            res[res.Count - 1] = target;
         }
         return res;
     }
@@ -212,7 +254,7 @@ public class Pathfinding : MonoBehaviour
             PathNode endNode = pathNodeArray[endNodeIndex];
             if (endNode.cameFromNodeIndex == -1)
             {
-                Debug.LogWarning("Didn't find a path");
+                Debug.Log("Didn't find a path");
             }
             else
             {
