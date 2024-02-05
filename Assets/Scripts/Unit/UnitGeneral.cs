@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class UnitGeneral : MonoBehaviour
 {
-    [SerializeField] protected UnitStats stats;
+    public string Name;
+    [SerializeField] private UnitStats baseStats; //base stats of the unit
+    protected UnitStats unitStats;                      //current stats of the unit, taking into account modifiers
+
     [SerializeField] protected UnitControls controls;
 
     private void OnEnable()
@@ -26,21 +29,11 @@ public class UnitGeneral : MonoBehaviour
 
     public UnitStats GetStats()
     {
-        return stats;
+        return baseStats;
     }
 
     public void GoTo(Vector3 pos)
     {
         controls.GoTo(pos);
     }
-}
-
-[Serializable]
-public class UnitStats
-{
-    public string unitName;
-    public int unitHealth;
-    public int unitMoveSpeed;
-    public int unitAttackDamage;
-    public int unitAttackRange;
 }

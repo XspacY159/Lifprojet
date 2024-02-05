@@ -21,7 +21,7 @@ public class UnitControls : MonoBehaviour
         int currentWaypointIndex = pathfinder.GetCurrentWaypointIndex();
 
         transform.position = Vector3.MoveTowards(transform.position, currentPath[currentWaypointIndex], 
-            unitStats.unitMoveSpeed * Time.fixedDeltaTime);
+            unitStats.moveSpeed * Time.fixedDeltaTime);
     }
 
     public void GoTo(Vector3 _pos)
