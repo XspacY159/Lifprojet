@@ -6,6 +6,7 @@ public class UnitControls : MonoBehaviour
     [SerializeField] private Pathfinding pathfinder;
     [SerializeField] private UnitGeneral unit; 
     private UnitStats unitStats;
+
     private void OnEnable()
     {
         unitStats = unit.GetStats();
