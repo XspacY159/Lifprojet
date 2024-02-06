@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Unit\UnitInteractions.cs" />
     <Compile Include="Assets\Scripts\System\GameManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitGeneral.cs" />
+    <Compile Include="Assets\Scripts\Unit\UnitType_SO.cs" />
     <Compile Include="Assets\Scripts\System\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitSelect\UnitSelectionController.cs" />
     <Compile Include="Assets\Scripts\Utility\MathUtility.cs" />
