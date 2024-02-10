@@ -837,6 +837,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93361174}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &139164490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 139164492}
+  - component: {fileID: 139164491}
+  m_Layer: 0
+  m_Name: CameraHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &139164491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139164490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa04e11a1161d7b469c1873d7363a3e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 0.05
+  smoothing: 5
+  center: {x: 4.5, y: 2, z: 4.5}
+  posRange: {x: 100, y: 100}
+  rotationSpeed: 1
+  zoomSpeed: 5
+  zoomRange: {x: -7, y: 9}
+  cameraToMove: {fileID: 963194228}
+--- !u!4 &139164492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139164490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 8, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 963194228}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &139684606
 GameObject:
   m_ObjectHideFlags: 0
@@ -4851,14 +4904,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
-  m_LocalPosition: {x: 5, y: 8, z: -3}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
+  m_Father: {fileID: 139164492}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1 &966069912
 GameObject:
   m_ObjectHideFlags: 0
@@ -5367,6 +5420,7 @@ MonoBehaviour:
   grid: {fileID: 1225992129}
   tilesList: []
   tilePrefab: {fileID: 2661454631472600384, guid: 271b6a5e5416ea74f84319fdfd85878c, type: 3}
+  wallPrefab: {fileID: 5582834693745137468, guid: 8c60bb19df04b484a9f3de18f4b0daf9, type: 3}
   tilesSize: {x: 1, y: 1}
   terrainSize: {x: 10, y: 10}
 --- !u!4 &1000417666
@@ -7087,7 +7141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1205780583}
   speed: 100
-  testPOI: {fileID: 1278820195}
+  testPOI: {fileID: 0}
 --- !u!136 &1205780579
 CapsuleCollider:
   m_ObjectHideFlags: 0

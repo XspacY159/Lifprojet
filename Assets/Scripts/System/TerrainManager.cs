@@ -8,6 +8,7 @@ public class TerrainManager : MonoBehaviour
     [SerializeField] private Transform grid;
     [SerializeField] private List<Tile> tilesList = new List<Tile>();
     [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private GameObject wallPrefab;
     [Tooltip("Taille des tuilles en 2D")]
     [SerializeField] private Vector2 tilesSize = Vector2.one;
     [Tooltip("Taille du terrain en 2D")]
@@ -25,11 +26,9 @@ public class TerrainManager : MonoBehaviour
 
         foreach (Tile tile in tilesList)
         {
-            if(!tile.GetTileType().walkable)
+            if (!tile.GetTileType().walkable)
             {
-                BoxCollider collider = tile.GetComponent<BoxCollider>();
-                collider.size = new Vector3(1, 2, 1);
-                collider.center = new Vector3(0, 0.5f, 0);
+                Instantiate(wallPrefab, tile.transform.position, Quaternion.identity, tile.transform);
             }
         }
     }
@@ -42,7 +41,7 @@ public class TerrainManager : MonoBehaviour
             Vector3 tilePos = tile.transform.position;
             if (!(pos.x <= tilePos.x + tilesSize.x / 2 && pos.x >= tilePos.x - tilesSize.x / 2))
                 continue;
-            if (!(pos.y <= tilePos.z + tilesSize.y / 2 && pos.y >= tilePos.z - tilesSize.y / 2)) 
+            if (!(pos.y <= tilePos.z + tilesSize.y / 2 && pos.y >= tilePos.z - tilesSize.y / 2))
                 continue;
 
             return tile;

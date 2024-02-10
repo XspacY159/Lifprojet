@@ -15,4 +15,3 @@ MonoBehaviour:
   tileName: SlowTile
   walkable: 1
   movingSpeedCoeff: 0.5
-  tileMaterial: {fileID: 2100000, guid: 0430d84b53d0d85468e488f85dcf240b, type: 2}

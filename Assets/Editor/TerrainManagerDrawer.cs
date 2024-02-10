@@ -70,7 +70,6 @@ public class TerrainManagerDrawer : Editor
             return;
         }
 
-
         Undo.RecordObject(currentSelectedTile, "Painted Tile");
         Undo.RecordObject(meshRenderer, "Painted Tile");
 

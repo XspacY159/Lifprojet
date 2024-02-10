@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
     }
 
     public void SetTileType(TileType_SO _tileType)
-    { 
-        tileType = _tileType; 
+    {
+        tileType = _tileType;
     }
 }

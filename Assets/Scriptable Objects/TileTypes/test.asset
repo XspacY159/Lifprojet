@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ee6ac243bcc6f543bfeb70a23c8365b, type: 3}
-  m_Name: BasicTile
+  m_Name: test
   m_EditorClassIdentifier: 
-  tileName: BasicTile
+  tileName: new tile type
   walkable: 1
   movingSpeedCoeff: 1

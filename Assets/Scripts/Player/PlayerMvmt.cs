@@ -1,5 +1,5 @@
 using UnityEngine;
-
+    
 public class PlayerMvmt : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
@@ -11,7 +11,7 @@ public class PlayerMvmt : MonoBehaviour
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
         Tile currentTile = TerrainManager.Instance.GetTile(currentPos);
 
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             testPOI.Interact(transform);
         }
