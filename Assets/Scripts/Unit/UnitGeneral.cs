@@ -7,8 +7,7 @@ public class UnitGeneral : MonoBehaviour
     public string Name;
     [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
 
-    [SerializeField]
-    private UnitType_SO type;
+    [SerializeField] private UnitType_SO type;
 
     [SerializeField] protected UnitControls controls;
 

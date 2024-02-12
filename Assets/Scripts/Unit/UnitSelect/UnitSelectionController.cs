@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class UnitSelectionController : MonoBehaviour
     // singleton of the selection
     private static UnitSelectionController _instance;
     public static UnitSelectionController Instance { get { return _instance; } }
+
+    public event Action changeUnitSelection;
 
     private void OnEnable()
     {
@@ -51,6 +54,7 @@ public class UnitSelectionController : MonoBehaviour
         if (!unitsList.ContainsKey(unitToAdd)) return;
         unitsSelected.Add(unitsList[unitToAdd]);
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
+        changeUnitSelection?.Invoke();
     }
 
     public void ShiftSelect(GameObject unitToAdd)   //player selects many units with shift pressed
@@ -68,17 +72,25 @@ public class UnitSelectionController : MonoBehaviour
             if (!unitsList.ContainsKey(unitToAdd)) return;
             unitsSelected.Remove(unitsList[unitToAdd]);
         }
+
+        changeUnitSelection?.Invoke();
     }
 
-    public void DragSelect(GameObject unitToAdd)    //player selects many units with dragged box
+    public void DragSelect(List<GameObject> unitsToAdd)    //player selects many units with dragged box
     {
-        if (!unitsList.ContainsKey(unitToAdd)) return;
-
-        if (!unitsSelected.Contains(unitsList[unitToAdd]))  //the unit is not yet in the selected list
+        int addedUnitsCount = 0;
+        foreach (GameObject unitToAdd in unitsToAdd) 
         {
-            unitsSelected.Add(unitsList[unitToAdd]);
-            unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
+            if (!unitsList.ContainsKey(unitToAdd)) return;
+
+            if (!unitsSelected.Contains(unitsList[unitToAdd]))  //the unit is not yet in the selected list
+            {
+                unitsSelected.Add(unitsList[unitToAdd]);
+                unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
+                addedUnitsCount++;
+            }
         }
+        if(addedUnitsCount > 0) changeUnitSelection?.Invoke();
     }
 
     public void DeselectAll()
@@ -88,6 +100,8 @@ public class UnitSelectionController : MonoBehaviour
             unit.transform.GetChild(0).gameObject.SetActive(false); //deactivates the highlight object
         }
         unitsSelected.Clear();
+
+        changeUnitSelection?.Invoke();
     }
 
     public void Deselect(GameObject unitToDeselect)

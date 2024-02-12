@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitDragSelect : MonoBehaviour
@@ -84,12 +85,14 @@ public class UnitDragSelect : MonoBehaviour
 
     private void SelectUnits()
     {
+        List<GameObject> unitsToAdd = new List<GameObject>();
         foreach (var unit in UnitSelectionController.Instance.unitsList.Values) //we go through all the units that can be selected
         {
             if (selectionBox.Contains(myCam.WorldToScreenPoint(unit.transform.position))) //the position of the unit is project to the camera, and checked if in the box
             {
-                UnitSelectionController.Instance.DragSelect(unit.gameObject);
+                unitsToAdd.Add(unit.gameObject);
             }
         }
+        UnitSelectionController.Instance.DragSelect(unitsToAdd);
     }
 }

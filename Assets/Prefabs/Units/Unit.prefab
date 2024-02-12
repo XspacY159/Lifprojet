@@ -151,12 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde275461eaff9a47a64747340963dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats:
-    unitName: TestUnit
-    unitHealth: 10
-    unitMoveSpeed: 2
-    unitAttackDamage: 1
-    unitAttackRange: 1
+  Name: 
+  unitStats:
+    health: 0
+    moveSpeed: 0
+    attackDamage: 0
+    attackRange: 0
+  type: {fileID: 0}
   controls: {fileID: 3012849379848627500}
 --- !u!114 &5820140448189035200
 MonoBehaviour:

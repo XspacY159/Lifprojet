@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.github.siccity.xnode": "https://github.com/Siccity/xNode.git",
     "com.unity.burst": "1.8.12",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.collections": "2.1.4",
