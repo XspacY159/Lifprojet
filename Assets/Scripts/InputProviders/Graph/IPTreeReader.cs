@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,9 +7,9 @@ namespace InputProvider.Graph
 {
     public class IPTreeReader : MonoBehaviour
     {
-        [SerializeField] private InputProviderGraph inputProvider;
+        [SerializeField] private InputProviderGraph ipGraph;
 
-        private Dictionary<string, Dictionary<string, bool>> stateKeys = 
+        private Dictionary<string, Dictionary<string, bool>> stateKeysList = 
             new Dictionary<string, Dictionary<string, bool>>();
 
         private bool startNodeExists = false;
@@ -18,12 +17,12 @@ namespace InputProvider.Graph
 
         private void OnEnable()
         {
-            foreach (BaseNode node in inputProvider.nodes)
+            foreach (BaseNode node in ipGraph.nodes)
             {
                 if (node.GetNodeType() != NodeType.InputMiddleware) continue;
 
                 InputMiddlewareNode inputMiddleware = (InputMiddlewareNode)node;
-                if (stateKeys.ContainsKey(inputMiddleware.MWName)) continue;
+                if (stateKeysList.ContainsKey(inputMiddleware.MWName)) continue;
 
                 Dictionary<string, bool> stateKeySwitches = new Dictionary<string, bool>();
                 foreach (string key in ((InputMiddlewareNode)node).stateKeys)
@@ -33,11 +32,11 @@ namespace InputProvider.Graph
                     else
                         stateKeySwitches.Add(key, false);
                 }
-                stateKeys.Add(((InputMiddlewareNode)node).MWName, stateKeySwitches);
+                stateKeysList.Add(((InputMiddlewareNode)node).MWName, stateKeySwitches);
             }
 
             startNodeExists = false;
-            foreach (BaseNode node in inputProvider.nodes)
+            foreach (BaseNode node in ipGraph.nodes)
             {
                 if (node.GetNodeType() == NodeType.start)
                 {
@@ -63,9 +62,9 @@ namespace InputProvider.Graph
             while (currentIMNode.stateKeys.Count != 0)
             {
                 string nextNode = "";
-                foreach (string key in stateKeys[currentIMNode.MWName].Keys)
+                foreach (string key in stateKeysList[currentIMNode.MWName].Keys)
                 {
-                    if (stateKeys[currentIMNode.MWName][key] == true)
+                    if (stateKeysList[currentIMNode.MWName][key] == true)
                     {
                         nextNode = key;
                         break;
@@ -82,20 +81,28 @@ namespace InputProvider.Graph
 
         public void SwitchStateKey(string MWName, string stateKey)
         {
-            if (!stateKeys.ContainsKey(MWName)) return;
-            if (!stateKeys[MWName].ContainsKey(stateKey)) return;
+            if (!stateKeysList.ContainsKey(MWName))
+            {
+                Debug.LogWarning("InputMiddleware " + MWName + " does not exist in the current input provider of " + gameObject.name);
+                return;
+            }
+            if (!stateKeysList[MWName].ContainsKey(stateKey))
+            {
+                Debug.LogWarning("State key " + stateKey + " of " + MWName + "wasn't found");
+                return;
+            }
 
             List<string> keys = new List<string>();
-            foreach (string key in stateKeys[MWName].Keys)
+            foreach (string key in stateKeysList[MWName].Keys)
             {
                 keys.Add(key);
             }
             foreach (string key in keys)
             {
-                stateKeys[MWName][key] = false;
+                stateKeysList[MWName][key] = false;
             }
 
-            stateKeys[MWName][stateKey] = true;
+            stateKeysList[MWName][stateKey] = true;
         }
 
         private BaseNode FindNextNode(BaseNode node, string output)
@@ -109,7 +116,7 @@ namespace InputProvider.Graph
                 }
             }
 
-            Debug.LogWarning("Next node of " + node.name + " : '" + output + "' wasn't found.");
+            Debug.LogWarning("Next node of " + node.name + " : " + output + " wasn't found.");
             return null;
         }
     }

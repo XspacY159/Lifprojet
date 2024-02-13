@@ -81,7 +81,6 @@
     <Compile Include="Assets\Scripts\System\TerrainManager.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\ChanceNode.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\IPTreeReader.cs" />
-    <Compile Include="Assets\Scripts\UI\UnitsDisplay.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitSelect\UnitClickSelect.cs" />
     <Compile Include="Assets\Scripts\System\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnityInteractions.cs" />
@@ -91,7 +90,9 @@
     <Compile Include="Assets\Scripts\Unit\UnitControls.cs" />
     <Compile Include="Assets\Scripts\Terrain\TileType_SO.cs" />
     <Compile Include="Assets\Scripts\InputProviders\InputProviderBase.cs" />
+    <Compile Include="Assets\Scripts\UI\UnitInfoDisplay.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\BaseIMNode.cs" />
+    <Compile Include="Assets\Scripts\UI\UnitsDisplayUI.cs" />
     <Compile Include="Assets\Scripts\Utility\TextUtility.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMvmt.cs" />
   </ItemGroup>

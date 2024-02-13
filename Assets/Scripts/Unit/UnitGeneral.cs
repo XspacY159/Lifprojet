@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitGeneral : MonoBehaviour
 {
-    public string Name;
+    public string unitName;
     [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
 
     [SerializeField] private UnitType_SO type;

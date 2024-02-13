@@ -104,7 +104,7 @@ namespace InputProvider.Graph
 
             if (!foudNode)
             {
-                Debug.LogWarning("Next node of " + currentNode.name + " : '" + output + "' wasn't found. Graph reading stopped");
+                Debug.LogWarning("Next node of " + currentNode.name + " : " + output + " wasn't found. Graph reading stopped");
                 stopReading = true;
                 return;
             }
