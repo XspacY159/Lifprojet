@@ -757,9 +757,6 @@
     <Reference Include="Unity.VisualScripting.Shared.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="XNode">
-      <HintPath>Library\ScriptAssemblies\XNode.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
@@ -814,9 +811,6 @@
     <Reference Include="Unity.Collections">
       <HintPath>Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="XNodeEditor">
-      <HintPath>Library\ScriptAssemblies\XNodeEditor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualScripting.State.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
     </Reference>
@@ -848,6 +842,10 @@
       <Project>{61BADA72-12AD-0D48-7A39-024E9FC95D37}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="XNode.csproj">
+      <Project>{AFE5D069-243E-DD43-C1E3-0412AC6380A2}</Project>
+      <Name>XNode</Name>
+    </ProjectReference>
     <ProjectReference Include="AYellowpaper.SerializedCollections.csproj">
       <Project>{B5D52E7B-7A11-AF82-77C1-1AED08190501}</Project>
       <Name>AYellowpaper.SerializedCollections</Name>
@@ -855,6 +853,10 @@
     <ProjectReference Include="AYellowpaper.SerializedCollections.Editor.csproj">
       <Project>{6678409E-B8E7-D100-C7BF-06D83856D548}</Project>
       <Name>AYellowpaper.SerializedCollections.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="XNodeEditor.csproj">
+      <Project>{8D2168C5-402F-7613-7E10-48CCC0CC83A7}</Project>
+      <Name>XNodeEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

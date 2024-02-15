@@ -11,6 +11,9 @@ public class UnitGeneral : MonoBehaviour
 
     [SerializeField] protected UnitControls controls;
 
+    private POI poiToInteract;
+    private Guid timerID = new Guid();
+
     private void OnEnable()
     {
         transform.GetChild(0).gameObject.SetActive(false);  //hides the selection hihlight mesh
@@ -33,9 +36,37 @@ public class UnitGeneral : MonoBehaviour
         UnitSelectionController.Instance.RemoveUnit(this);
     }
 
+    private void Update()
+    {
+        if (poiToInteract != null)
+        {
+            if (!TimerManager.StartTimer(0.25f, "Unit Interaction Try" + timerID))
+            {
+                if (poiToInteract.IsInRange(transform))
+                    poiToInteract.Interact();
+            }
+        }
+        else
+            TimerManager.Cancel("Unit Interaction Try" + timerID);
+    }
+
     public UnitStats GetStats()
     {
         return unitStats;
+    }
+
+    public void TryInteract(POI poi)
+    {
+        if (poi == null) return;
+        poiToInteract = poi;
+        poiToInteract.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void StopTryInteract()
+    {
+        if (poiToInteract == null) return;
+        poiToInteract.transform.GetChild(0).gameObject.SetActive(false);
+        poiToInteract = null;
     }
 
     public void GoTo(Vector3 pos)

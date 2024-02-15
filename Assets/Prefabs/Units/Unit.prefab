@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4436293541732654057}
   - component: {fileID: 5820140448189035200}
   - component: {fileID: 3012849379848627500}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 3581168278969977873}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6890093036259507514
 MeshFilter:
@@ -151,13 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde275461eaff9a47a64747340963dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
+  unitName: A
   unitStats:
     health: 0
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
-  type: {fileID: 0}
+  type: {fileID: 11400000, guid: 965887145cbedba47bbca4d4a936bd6f, type: 2}
   controls: {fileID: 3012849379848627500}
 --- !u!114 &5820140448189035200
 MonoBehaviour:
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 3581168278969977873}
   - component: {fileID: 2742255844376002089}
   - component: {fileID: 2192933522007053679}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
