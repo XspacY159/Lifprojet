@@ -5,10 +5,9 @@ using UnityEngine;
 public class UnitGeneral : MonoBehaviour
 {
     public string unitName;
+    [SerializeField] protected Team team;
     [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
-
     [SerializeField] private UnitType_SO type;
-
     [SerializeField] protected UnitControls controls;
 
     private POI poiToInteract;
@@ -53,6 +52,11 @@ public class UnitGeneral : MonoBehaviour
     public UnitStats GetStats()
     {
         return unitStats;
+    }
+
+    public Team GetTeam()
+    {
+        return team;
     }
 
     public void TryInteract(POI poi)

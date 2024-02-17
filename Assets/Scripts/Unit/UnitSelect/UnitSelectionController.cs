@@ -52,6 +52,9 @@ public class UnitSelectionController : MonoBehaviour
     {
         DeselectAll();
         if (!unitsList.ContainsKey(unitToAdd)) return;
+
+        if (unitsList[unitToAdd].GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) return;
+
         unitsSelected.Add(unitsList[unitToAdd]);
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
         changeUnitSelection?.Invoke();
@@ -60,6 +63,8 @@ public class UnitSelectionController : MonoBehaviour
     public void ShiftSelect(GameObject unitToAdd)   //player selects many units with shift pressed
     {
         if (!unitsList.ContainsKey(unitToAdd)) return;
+
+        if (unitsList[unitToAdd].GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) return;
 
         if (!unitsSelected.Contains(unitsList[unitToAdd]))
         {
@@ -81,7 +86,9 @@ public class UnitSelectionController : MonoBehaviour
         int addedUnitsCount = 0;
         foreach (GameObject unitToAdd in unitsToAdd) 
         {
-            if (!unitsList.ContainsKey(unitToAdd)) return;
+            if (!unitsList.ContainsKey(unitToAdd)) continue;
+
+            if (unitsList[unitToAdd].GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) continue;
 
             if (!unitsSelected.Contains(unitsList[unitToAdd]))  //the unit is not yet in the selected list
             {
@@ -106,6 +113,7 @@ public class UnitSelectionController : MonoBehaviour
 
     public void Deselect(GameObject unitToDeselect)
     {
-
+        if (!unitsList.ContainsKey(unitToDeselect)) return;
+        unitsList.Remove(unitToDeselect);
     }
 }

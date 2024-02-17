@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\InputProviders\Graph\StartNode.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitStats.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\InputProviderGraph.cs" />
+    <Compile Include="Assets\Scripts\System\enums.cs" />
     <Compile Include="Assets\Scripts\AI\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Terrain\Tile.cs" />
     <Compile Include="Assets\Scripts\Terrain\POI.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets\Scripts\Unit\UnitSelect\UnitSelectionController.cs" />
     <Compile Include="Assets\Scripts\Utility\MathUtility.cs" />
     <Compile Include="Assets\Scripts\System\TerrainManager.cs" />
+    <Compile Include="Assets\Scripts\System\GameInfoManager.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\ChanceNode.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\IPTreeReader.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitSelect\UnitClickSelect.cs" />
