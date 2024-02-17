@@ -46,7 +46,7 @@ public class CameraMovements : MonoBehaviour
     {
         Vector2 rawInput = playerInputActions.GameplayInputs.CameraMovements.ReadValue<Vector2>();
         Vector3 input = new Vector3(rawInput.x, 0, rawInput.y);
-        Vector3 dir = (transform.worldToLocalMatrix.inverse * input).normalized;
+        Vector3 dir = (cameraToMove.worldToLocalMatrix.inverse * input).normalized;
         Vector3 movement = new Vector3(dir.x, 0, dir.z);
         Vector3 nextTargetPos = targetPos + movement * movementSpeed;
 
@@ -61,7 +61,7 @@ public class CameraMovements : MonoBehaviour
         targetAngle += Input.GetAxisRaw("Mouse X") * rotationSpeed;
 
         currentAngle = Mathf.Lerp(currentAngle, targetAngle, smoothing * Time.deltaTime);
-        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, currentAngle, transform.eulerAngles.z);
+        cameraToMove.rotation = Quaternion.Euler(cameraToMove.eulerAngles.x, currentAngle, cameraToMove.eulerAngles.z);
     }
 
     private void Zoom()
