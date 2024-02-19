@@ -105,6 +105,25 @@ namespace InputProvider.Graph
             stateKeysList[MWName][stateKey] = true;
         }
 
+        public string GetIMSwitchesState(string MWName) //Return Input Middleware Active switch/statekey
+        {
+            if (!stateKeysList.ContainsKey(MWName))
+            {
+                Debug.LogWarning("InputMiddleware " + MWName + " does not exist in the current input provider of " + gameObject.name);
+                return "";
+            }
+
+            string res = "";
+
+            foreach (string key in stateKeysList[MWName].Keys)
+            {
+                if (stateKeysList[MWName][key])
+                    res = key;
+            }
+
+            return res;
+        }
+
         private BaseNode FindNextNode(BaseNode node, string output)
         {
             foreach (NodePort port in node.Ports)
