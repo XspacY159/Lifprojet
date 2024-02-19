@@ -14,7 +14,7 @@ public class PlayerMvmt : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             if(testPOI.IsInRange(transform))
-                testPOI.Interact();
+                testPOI.Interact(transform);
         }
 
         if (currentTile == null) return;

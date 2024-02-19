@@ -11,33 +11,35 @@ public class UnitStats
     public int moveSpeed;
     public int attackDamage;
     public int attackRange;
+    public float maxRessources;
 
     private UnitStats()
     {
-        this.SetStats(0, 0, 0, 0);
+        this.SetStats(0, 0, 0, 0, 0);
     }
 
-    private UnitStats(int _health, int _moveSpeed, int _attackDamage, int _attackRange)
+    private UnitStats(int _health, int _moveSpeed, int _attackDamage, int _attackRange, float _maxRessources)
     {
-        this.SetStats(_health, _moveSpeed, _attackDamage, _attackRange);
+        this.SetStats(_health, _moveSpeed, _attackDamage, _attackRange, _maxRessources);
     }
 
     private UnitStats(UnitStats s2)
     {
-        this.SetStats(s2.health, s2.moveSpeed, s2.attackDamage, s2.attackRange);
+        this.SetStats(s2.health, s2.moveSpeed, s2.attackDamage, s2.attackRange, s2.maxRessources);
     }
 
-    public void SetStats(int _health, int _moveSpeed, int _attackDamage, int _attackRange)
+    public void SetStats(int _health, int _moveSpeed, int _attackDamage, int _attackRange, float _maxRessources)
     {
         health = _health;
         moveSpeed = _moveSpeed;
         attackDamage = _attackDamage;
         attackRange = _attackRange;
+        maxRessources = _maxRessources;
     }
 
     public void SetStats(UnitStats s2)
     {
-        this.SetStats(s2.health, s2.moveSpeed, s2.attackDamage, s2.attackRange);
+        this.SetStats(s2.health, s2.moveSpeed, s2.attackDamage, s2.attackRange, s2.maxRessources);
     }
 
     public static UnitStats operator+(UnitStats s1, UnitStats s2)

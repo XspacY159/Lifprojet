@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Utility\MathUtility.cs" />
     <Compile Include="Assets\Scripts\System\TerrainManager.cs" />
     <Compile Include="Assets\Scripts\System\GameInfoManager.cs" />
+    <Compile Include="Assets\Scripts\Terrain\RessourcePOI.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\ChanceNode.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\IPTreeReader.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitSelect\UnitClickSelect.cs" />

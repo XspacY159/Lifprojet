@@ -5003,6 +5003,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
       value: 3
@@ -7853,6 +7857,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
       value: 3
@@ -8183,6 +8191,7 @@ GameObject:
   - component: {fileID: 1278820192}
   - component: {fileID: 1278820191}
   - component: {fileID: 1278820195}
+  - component: {fileID: 1278820196}
   m_Layer: 8
   m_Name: POI
   m_TagString: Untagged
@@ -8231,7 +8240,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a22d4310b5b91c84caef1b18d879df3c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8290,9 +8299,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRange: 1
-  interactionEvent:
-    m_PersistentCalls:
-      m_Calls: []
+--- !u!114 &1278820196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278820190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3667ab66daa97a459c0ed0e180e0d20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poi: {fileID: 1278820195}
+  ressourcesCount: 0
+  maxRessources: 20
+  ressourceProductionRate: 0.25
 --- !u!1 &1301450590
 GameObject:
   m_ObjectHideFlags: 0
@@ -11421,6 +11443,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
       value: 3
@@ -13244,6 +13270,7 @@ GameObject:
   - component: {fileID: 1853492326}
   - component: {fileID: 1853492325}
   - component: {fileID: 1853492327}
+  - component: {fileID: 1853492328}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -13302,6 +13329,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: 3
+--- !u!114 &1853492328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853492324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a01cf6749f3f94eac1f3fe7ba4f829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1860057735
 GameObject:
   m_ObjectHideFlags: 0
@@ -14488,7 +14527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7993950093366014838, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_Layer

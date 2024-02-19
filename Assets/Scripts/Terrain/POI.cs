@@ -1,14 +1,13 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class POI : MonoBehaviour
 {
     [SerializeField] private float interactionRange = 1;
-    public UnityEvent interactionEvent;
-    public void Interact()
+    public event Action<Transform> interactionEvent;
+    public void Interact(Transform agent)
     {
-        interactionEvent?.Invoke();
-        Debug.Log("Interaction");
+        interactionEvent?.Invoke(agent);
     }
 
     public bool IsInRange(Transform agent)

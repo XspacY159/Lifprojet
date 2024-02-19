@@ -10,6 +10,8 @@ public class UnitGeneral : MonoBehaviour
     [SerializeField] private UnitType_SO type;
     [SerializeField] protected UnitControls controls;
 
+    [SerializeField] private float ressources;
+
     private POI poiToInteract;
     private Guid timerID = new Guid();
 
@@ -42,7 +44,7 @@ public class UnitGeneral : MonoBehaviour
             if (!TimerManager.StartTimer(0.25f, "Unit Interaction Try" + timerID))
             {
                 if (poiToInteract.IsInRange(transform))
-                    poiToInteract.Interact();
+                    poiToInteract.Interact(transform);
             }
         }
         else
@@ -76,5 +78,22 @@ public class UnitGeneral : MonoBehaviour
     public void GoTo(Vector3 pos)
     {
         controls.GoTo(pos);
+    }
+
+    public float CollectRessources(float _ressources)
+    {
+        if (ressources >= unitStats.maxRessources)
+            return 0;
+
+        float diff = unitStats.maxRessources - ressources;
+        ressources += _ressources;
+
+        if (ressources >= unitStats.maxRessources)
+        {
+            ressources = Mathf.Clamp(ressources, 0, unitStats.maxRessources);
+            return diff;
+        }
+
+        return _ressources;
     }
 }
