@@ -62,6 +62,18 @@ public class TimerManager : MonoBehaviour
         return timers[key]; 
     }
 
+    public static Dictionary<string, Timer> GetTimers()
+    {
+        Dictionary<string, Timer> res = new Dictionary<string, Timer>();
+
+        foreach (string key in timers.Keys)
+        {
+            res.Add(key, timers[key]);
+        }
+
+        return res;
+    }
+
     public static bool IsCounting(string key)
     {
         return timers.ContainsKey(key);

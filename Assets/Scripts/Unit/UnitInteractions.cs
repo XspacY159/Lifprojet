@@ -36,10 +36,16 @@ public class UnitInteractions : MonoBehaviour
         Tile tile = hit.collider.GetComponent<Tile>();
         if (tile == null || !tile.GetTileType().walkable)
             return;
-    
+
+        Vector3 moveToPosition = new Vector3(hit.point.x, 0, hit.point.z);
+        List<Vector3> targetPositionList = MathUtility.GetPositionsAround(moveToPosition, 0.2f, 0.7f, selectedUnits.Count);
+
+        int targetPositionListIndex = 0;
         foreach (UnitGeneral unit in selectedUnits)
         {
-            Vector3 target = new Vector3(hit.point.x, unit.transform.position.y, hit.point.z);
+            targetPositionListIndex = (targetPositionListIndex + 1) % targetPositionList.Count;
+            Vector3 target = new Vector3(targetPositionList[targetPositionListIndex].x, unit.transform.position.y
+                , targetPositionList[targetPositionListIndex].z);
             unit.GoTo(target);
         }
     }

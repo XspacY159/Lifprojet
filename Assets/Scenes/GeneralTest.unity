@@ -5005,7 +5005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
@@ -7859,7 +7859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
@@ -8193,7 +8193,7 @@ GameObject:
   - component: {fileID: 1278820195}
   - component: {fileID: 1278820196}
   m_Layer: 8
-  m_Name: POI
+  m_Name: RessourcePOI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11445,7 +11445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team

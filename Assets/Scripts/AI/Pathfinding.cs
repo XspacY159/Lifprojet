@@ -11,7 +11,7 @@ using System.Collections;
 public class Pathfinding : MonoBehaviour
 {
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 24;
+    private const int MOVE_DIAGONAL_COST = 14;
 
     [SerializeField] private Vector3 target;
     [SerializeField] private Rigidbody rb;
@@ -24,7 +24,7 @@ public class Pathfinding : MonoBehaviour
 
     private List<Vector3> currentPath = new List<Vector3>();
     private List<Vector2> obstacles = new List<Vector2>();
-    private Guid pathfindingID = new Guid();
+    private Guid pathfindingID = System.Guid.NewGuid();
 
     public event Action OnPathfindingUpdate;
 
@@ -114,11 +114,14 @@ public class Pathfinding : MonoBehaviour
         float startTime = Time.realtimeSinceStartup;
 
         NativeList<int2> newPath = new NativeList<int2>(1, Allocator.TempJob);
-        FindPathJob findPathJob = new FindPathJob { 
-                startPos = new int2(50 + intTarget.x - intCurrentPos.x, 50 + intTarget.y - intCurrentPos.y),
-                endPos = new int2(50, 50),
-                wallsList = walls,
-                path = newPath };
+        NativeList<int> __enablePathfinding = new NativeList<int>(1, Allocator.TempJob) { 1 };
+        FindPathJob findPathJob = new FindPathJob {
+            startPos = new int2(50 + intTarget.x - intCurrentPos.x, 50 + intTarget.y - intCurrentPos.y),
+            endPos = new int2(50, 50),
+            wallsList = walls,
+            path = newPath,
+            _enablePathfinding = __enablePathfinding
+        };
         JobHandle jobHandle = findPathJob.Schedule();
 
         jobHandle.Complete();
@@ -128,11 +131,13 @@ public class Pathfinding : MonoBehaviour
             Vector2 finalPos = currentPos + new Vector2(pos.x - 50, pos.y - 50);
             res.Add(new Vector3(finalPos.x, transform.position.y, finalPos.y));
         }
+        enablePathfinding = findPathJob._enablePathfinding[0] == 1 ? true : false;
 
         newPath.Dispose();
         walls.Dispose();
+        __enablePathfinding.Dispose();
 
-        if(showCalculationTime)
+        if (showCalculationTime)
         {
             float endTime = Time.realtimeSinceStartup;
             Debug.Log("Pathfindind Time : " + (endTime - startTime) * 1000f);
@@ -153,6 +158,7 @@ public class Pathfinding : MonoBehaviour
         public int2 endPos;
         public NativeList<int2> wallsList;
         public NativeList<int2> path;
+        public NativeList<int> _enablePathfinding;
 
         public void Execute()
         {
@@ -255,6 +261,7 @@ public class Pathfinding : MonoBehaviour
             if (endNode.cameFromNodeIndex == -1)
             {
                 Debug.Log("Didn't find a path");
+                _enablePathfinding[0] = 0;
             }
             else
             {
