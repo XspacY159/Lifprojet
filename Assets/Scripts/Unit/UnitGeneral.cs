@@ -9,6 +9,7 @@ public class UnitGeneral : MonoBehaviour
     [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
     [SerializeField] private UnitType_SO type;
     [SerializeField] protected UnitControls controls;
+    [SerializeField] private LayerMask unitsLayer;
 
     [SerializeField] private float ressources;
 
@@ -95,5 +96,10 @@ public class UnitGeneral : MonoBehaviour
         }
 
         return _ressources;
+    }
+
+    public Collider[] UnitsInRange()
+    {
+        return Physics.OverlapSphere(transform.position, unitStats.attackRange, unitsLayer);
     }
 }

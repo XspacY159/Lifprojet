@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: combatAggressive
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -248, y: -824}
+  position: {x: -264, y: -824}
   ports:
     keys:
     - entry
@@ -857,7 +857,7 @@ MonoBehaviour:
   m_Name: defending
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -248, y: -520}
+  position: {x: -264, y: -520}
   ports:
     keys:
     - entry
