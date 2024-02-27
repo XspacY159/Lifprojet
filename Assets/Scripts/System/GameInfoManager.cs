@@ -4,7 +4,7 @@ public class GameInfoManager : MonoBehaviour
 {
     public static GameInfoManager Instance;
 
-    [SerializeField] private Team playerTeam;
+    [SerializeField] private TeamName playerTeam;
 
     private void OnEnable()
     {
@@ -14,12 +14,12 @@ public class GameInfoManager : MonoBehaviour
         }
     }
 
-    public void SetPlayerTeam(Team team)
+    public void SetPlayerTeam(TeamName team)
     {  
         playerTeam = team; 
     }
 
-    public Team GetPlayerTeam() 
+    public TeamName GetPlayerTeam() 
     {
         return playerTeam; 
     }
