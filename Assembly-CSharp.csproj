@@ -85,12 +85,12 @@
     <Compile Include="Assets\Scripts\Terrain\RessourcePOI.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\ChanceNode.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\IPTreeReader.cs" />
+    <Compile Include="Assets\Scripts\Unit\UnitMovements.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitSelect\UnitClickSelect.cs" />
     <Compile Include="Assets\Scripts\System\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\IPGraphReader.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitCloseCombat.cs" />
     <Compile Include="Assets\Scripts\Utility\RandomUtility.cs" />
-    <Compile Include="Assets\Scripts\Unit\UnitControls.cs" />
     <Compile Include="Assets\Scripts\Terrain\TileType_SO.cs" />
     <Compile Include="Assets\Scripts\InputProviders\InputProviderBase.cs" />
     <Compile Include="Assets\Scripts\UI\UnitInfoDisplay.cs" />

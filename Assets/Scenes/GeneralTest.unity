@@ -8161,7 +8161,7 @@ GameObject:
   - component: {fileID: 1278820195}
   - component: {fileID: 1278820196}
   m_Layer: 8
-  m_Name: POI
+  m_Name: RessourcePOI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

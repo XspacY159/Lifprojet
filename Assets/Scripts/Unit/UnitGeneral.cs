@@ -8,13 +8,12 @@ public class UnitGeneral : MonoBehaviour
     [SerializeField] protected Team team;
     [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
     [SerializeField] private UnitType_SO type;
-    [SerializeField] protected UnitControls controls;
-    [SerializeField] private LayerMask unitsLayer;
+    [SerializeField] protected UnitMovements controls;
 
     [SerializeField] private float ressources;
 
     private POI poiToInteract;
-    private Guid timerID = new Guid();
+    private Guid timerID = System.Guid.NewGuid();
 
     private void OnEnable()
     {

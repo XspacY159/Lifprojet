@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\InputMiddlewareNodeDrawer.cs" />
+    <Compile Include="Assets\Editor\TimerManagerDrawer.cs" />
     <Compile Include="Assets\Editor\IPGraphDrawer.cs" />
     <Compile Include="Assets\Editor\TerrainManagerDrawer.cs" />
     <Compile Include="Assets\Editor\IMChanceNodeDrawer.cs" />

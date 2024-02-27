@@ -14,4 +14,20 @@ public class MathUtility
 
         return Vector3.Slerp(startRelativeCenter, endRelativeCenter, t) + centerPivot;
     }
+
+    public static List<Vector3> GetPositionsAround(Vector3 center, float minDist, float maxDist, float positionsCount)
+    {
+        List<Vector3> positions = new List<Vector3>();
+        minDist = Mathf.Clamp(minDist, 0, maxDist);
+        maxDist = Mathf.Clamp(maxDist, minDist, float.PositiveInfinity);
+        for (int i = 0; i < positionsCount; i++)
+        {
+            float angle = i * (360f / positionsCount);
+            Vector3 dir = Quaternion.Euler(0, angle, 0) * Vector3.right;
+            Vector3 pos = center + dir * UnityEngine.Random.Range(minDist, maxDist);
+            positions.Add(pos);
+        }
+
+        return positions;
+    }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitControls : MonoBehaviour
+public class UnitMovements : MonoBehaviour
 {
     [SerializeField] private Pathfinding pathfinder;
     [SerializeField] private UnitGeneral unit; 
