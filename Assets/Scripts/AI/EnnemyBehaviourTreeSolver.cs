@@ -8,6 +8,7 @@ public class EnnemyBTSolver : MonoBehaviour
 {
     [SerializeField]
     private IPTreeReader tree;
+    private UnitGeneral unit;
 
     public void solve()
     {

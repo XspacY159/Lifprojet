@@ -5,10 +5,12 @@ using UnityEngine;
 public class UnitGeneral : MonoBehaviour
 {
     public string unitName;
-    [SerializeField] protected Team team;
-    [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
-    [SerializeField] private UnitType_SO type;
+    [SerializeField] protected TeamName team;
+    [SerializeField] protected UnitStats unitStats; //current stats of the unit, taking into account modifiers
+    [SerializeField] private UnitType_SO type;      //used to load predefined base stats of the unit
     [SerializeField] protected UnitMovements controls;
+    [SerializeField] private LayerMask unitsLayer;  //used to check collisions only with other units
+    private int messageAddress;                     //acts like a postal address for UnitMessages
 
     [SerializeField] private float ressources;
 
@@ -56,7 +58,7 @@ public class UnitGeneral : MonoBehaviour
         return unitStats;
     }
 
-    public Team GetTeam()
+    public TeamName GetTeam()
     {
         return team;
     }
@@ -100,5 +102,10 @@ public class UnitGeneral : MonoBehaviour
     public Collider[] UnitsInRange()
     {
         return Physics.OverlapSphere(transform.position, unitStats.attackRange, unitsLayer);
+    }
+
+    public void setMessageAddress(int _address)
+    {
+        messageAddress = _address;
     }
 }
