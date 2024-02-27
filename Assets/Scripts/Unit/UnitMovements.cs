@@ -29,4 +29,9 @@ public class UnitMovements : MonoBehaviour
     {
         pathfinder.SetTarget(_pos);
     }
+
+    public void StopGoTo()
+    {
+        pathfinder.StopPathfiding();
+    }
 }

@@ -49,7 +49,7 @@ public class UnitsDisplayUI : MonoBehaviour
             UnitInfoDisplay unitInfoDisplay = Instantiate(infoDisplayPrefab, unitInfoContainer, false);
 
             unitInfoDisplay.unitNameText.text = unit.unitName;
-            unitInfoDisplay.unitHPText.text = "HP : " + unit.GetStats().health;
+            unitInfoDisplay.unitHPText.text = "HP : " + unit.GetStats().maxHealth;
             unitInfoDisplay.unitAttackDamageText.text = "Dmaage : " + unit.GetStats().attackDamage;
 
             unitsInfoDisplays.Add(unitInfoDisplay);

@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 2578499708529825926}
   - component: {fileID: 8055938399994573528}
   m_Layer: 5
-  m_Name: UnitInfoDisplay
+  m_Name: UnitInfoDisplay_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,13 +7,16 @@ public class UnitGeneral : MonoBehaviour
     public string unitName;
     [SerializeField] protected Team team;
     [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
-    [SerializeField] private UnitType_SO type;
+    [SerializeField] protected UnitType_SO type;
+
+    [SerializeField] protected UnitHealth health;
     [SerializeField] protected UnitMovements controls;
+    [SerializeField] protected UnitCombat unitCombat;
 
     [SerializeField] private float ressources;
 
     private POI poiToInteract;
-    private Guid timerID = System.Guid.NewGuid();
+    private Guid unitID = System.Guid.NewGuid();
 
     private void OnEnable()
     {
@@ -41,15 +44,17 @@ public class UnitGeneral : MonoBehaviour
     {
         if (poiToInteract != null)
         {
-            if (!TimerManager.StartTimer(0.25f, "Unit Interaction Try" + timerID))
+            if (!TimerManager.StartTimer(0.25f, "Unit Interaction Try" + unitID))
             {
                 if (poiToInteract.IsInRange(transform))
                     poiToInteract.Interact(transform);
             }
         }
         else
-            TimerManager.Cancel("Unit Interaction Try" + timerID);
+            TimerManager.Cancel("Unit Interaction Try" + unitID);
     }
+
+    public Guid GetUnitID() { return unitID; }
 
     public UnitStats GetStats()
     {
@@ -65,7 +70,6 @@ public class UnitGeneral : MonoBehaviour
     {
         if (poi == null) return;
         poiToInteract = poi;
-        poiToInteract.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void StopTryInteract()
@@ -78,6 +82,11 @@ public class UnitGeneral : MonoBehaviour
     public void GoTo(Vector3 pos)
     {
         controls.GoTo(pos);
+    }
+
+    public void StopGoTo()
+    {
+        controls.StopGoTo();
     }
 
     public float CollectRessources(float _ressources)
@@ -95,5 +104,22 @@ public class UnitGeneral : MonoBehaviour
         }
 
         return _ressources;
+    }
+
+    public void AttackUnit(UnitGeneral unitToAttack)
+    {
+        if (unitToAttack.team == this.team) return;
+
+        unitCombat.SetUnitToAttack(unitToAttack);
+    }
+
+    public void StopAttackUnit()
+    {
+        unitCombat.SetUnitToAttack(null);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health.TakeDamage(damage);
     }
 }
