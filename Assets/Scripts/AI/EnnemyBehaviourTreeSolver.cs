@@ -8,17 +8,63 @@ public class EnnemyBTSolver : MonoBehaviour
 {
     [SerializeField]
     private IPTreeReader tree;
+    [SerializeField]
     private UnitGeneral unit;
+    private UnitGeneral targetUnit;
+    private POI objective;
+
+    void Start()
+    {
+        tree.SwitchStateKey("combatAggressive", "noAdversary");
+        tree.SwitchStateKey("defending", "waiting");
+        tree.SwitchStateKey("moveToObjective", "onTheMove");
+        targetUnit = null;
+    }
+
+    void Update()
+    {
+        switch (unit.baseState)
+        {
+            case AIState.Aggressive:
+                tree.SwitchStateKey("state", "aggressive");
+                break;
+            case AIState.Defensive:
+                tree.SwitchStateKey("state", "defensive");
+                break;
+            case AIState.FollowObjective:
+                tree.SwitchStateKey("state", "followObjective");
+                break;
+        }
+        solve();
+    }
 
     public void solve()
     {
         string currentNode = tree.ResolveGraph();
+
+        if(targetUnit == null)
+        {
+            foreach (Collider unitInRange in unit.UnitsInRange())
+            {
+                UnitGeneral tmp = unitInRange.gameObject.GetComponent<UnitGeneral>();
+                if (tmp.GetTeam() != unit.GetTeam()) //Beware! GetComponent could be a performance problem!
+                {
+                    targetUnit = tmp;
+                    break;
+                }
+            }
+        }
+        
 
         switch (currentNode)
         {
             // == AI state is aggressive
             case "idleAggressive":
                 //unit waits for an ennemy
+                if (targetUnit != null)
+                {
+                    unit.AttackUnit(targetUnit);
+                }
                 break;
             case "attackAggressive":
                 //unit attacks

@@ -15,8 +15,11 @@ public class UnitGeneral : MonoBehaviour
 
     [SerializeField] private float ressources;
 
+    public AIState baseState;
+
     private POI poiToInteract;
     private Guid unitID = System.Guid.NewGuid();
+    [SerializeField] private LayerMask unitsLayer;  //used to check collisions only with other units
 
     private void OnEnable()
     {
@@ -121,5 +124,10 @@ public class UnitGeneral : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health.TakeDamage(damage);
+    }
+
+    public Collider[] UnitsInRange()
+    {
+        return Physics.OverlapSphere(transform.position, unitStats.attackRange, unitsLayer);
     }
 }

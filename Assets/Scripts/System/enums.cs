@@ -13,3 +13,10 @@ public enum MessageObject
     DefendPosition,
     UnitAttacked
 }
+
+public enum AIState
+{
+    Aggressive,
+    Defensive,
+    FollowObjective
+}
