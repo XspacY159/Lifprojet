@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitGeneral : MonoBehaviour
 {
     public string unitName;
-    [SerializeField] protected Team team;
+    [SerializeField] protected TeamName team;
     [SerializeField] protected UnitStats unitStats;  //current stats of the unit, taking into account modifiers
     [SerializeField] protected UnitType_SO type;
 
@@ -61,7 +61,7 @@ public class UnitGeneral : MonoBehaviour
         return unitStats;
     }
 
-    public Team GetTeam()
+    public TeamName GetTeam()
     {
         return team;
     }

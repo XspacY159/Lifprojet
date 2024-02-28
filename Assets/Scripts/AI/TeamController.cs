@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,15 +7,13 @@ public class TeamController : MonoBehaviour
 {
     [SerializeField] protected TeamName team;
     [SerializeField] private List<UnitGeneral> units = new List<UnitGeneral>();
-    private List<UnitMessages> messagesExchange = new List<UnitMessages>();
+    //private Dictionary<Guid, UnitGeneral> units = new Dictionary<Guid, UnitGeneral>();
+    //private List<UnitMessages> messagesExchange = new List<UnitMessages>();
+    private Dictionary<Guid, UnitMessages> messagesExchange = new Dictionary<Guid, UnitMessages>();
 
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < units.Count; i++)
-        {
-            units[i].setMessageAddress(i);
-        }
     }
 
     // Update is called once per frame
@@ -23,16 +22,23 @@ public class TeamController : MonoBehaviour
         
     }
 
-    public void sendMessageToAll(UnitMessages message)
+    public void SendMessageToAll(UnitMessages message)
     {
-        for(int i = 0; i < units.Count; i++)
+        foreach (UnitGeneral unit in units)
         {
-            messagesExchange[i] = message;
+            if (!messagesExchange.ContainsKey(unit.GetUnitID()))
+            {
+                messagesExchange.Add(unit.GetUnitID(), message);
+            }
         }
     }
 
-    public void sendMessageToUnit(UnitMessages message, int unitID)
+    public void SendMessageToUnit(UnitMessages message, Guid unitID)
     {
-        messagesExchange[unitID] = message;
+        //messagesExchange[unitID] = message;
+        if (!messagesExchange.ContainsKey(unitID))
+        {
+            messagesExchange.Add(unitID, message);
+        }
     }
 }
