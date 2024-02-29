@@ -11,7 +11,7 @@ public class EnnemyBTSolver : MonoBehaviour
     [SerializeField]
     private UnitGeneral unit;
     private UnitGeneral targetUnit;
-    private POI objective;
+    private Vector3 objective;
 
     void Start()
     {
@@ -63,23 +63,48 @@ public class EnnemyBTSolver : MonoBehaviour
                 //unit waits for an ennemy
                 if (targetUnit != null)
                 {
-                    unit.AttackUnit(targetUnit);
+                    tree.SwitchStateKey("combatAggressive", "adversaryFound");
                 }
                 break;
+
             case "attackAggressive":
                 //unit attacks
+                unit.AttackUnit(targetUnit);
+                if (Vector3.Distance(unit.transform.position, targetUnit.transform.position) > unit.GetStats().attackRange + 0.5)
+                {
+                    tree.SwitchStateKey("combatAggressive", "noAdversary");
+                    targetUnit = null;
+                }
                 break;
 
             // == AI state is defensive
-            case "Defend":
+            case "defend":
                 //unit waits for an ennemy
+                objective = unit.transform.position;
+                if (targetUnit != null)
+                {
+                    tree.SwitchStateKey("defending", "fighting");
+                    tree.SwitchStateKey("combatDefense", "adversaryFound");
+                }
                 break;
-            case "BackToDefense":
+
+            case "backToDefense":
                 //the unit decided to stop its fight
-                tree.SwitchStateKey("defending", "Waiting");
+                unit.GoTo(objective);
+                if(Vector3.Distance(unit.transform.position, objective) < 0.5)
+                {
+                    tree.SwitchStateKey("defending", "waiting");
+                }
                 break;
+
             case "attackDefense":
-                //unit attacks
+                //if not too far from its objective, unit attacks
+                unit.AttackUnit(targetUnit);
+                if(Vector3.Distance(unit.transform.position, objective) > 2.0)
+                {
+                    tree.SwitchStateKey("combatDefense", "noAdversary");
+                    targetUnit = null;
+                }
                 break;
 
             // == AI state is followObjective
@@ -99,5 +124,7 @@ public class EnnemyBTSolver : MonoBehaviour
                 break;
 
         }
+
+        //Debug.Log(currentNode);
     }
 }

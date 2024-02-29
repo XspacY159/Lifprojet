@@ -19572,7 +19572,7 @@ MonoBehaviour:
   controls: {fileID: 3012849379374449012}
   unitCombat: {fileID: 6571789670661119402}
   ressources: 0
-  baseState: 0
+  baseState: 1
   unitsLayer:
     serializedVersion: 2
     m_Bits: 128
