@@ -35,10 +35,35 @@ public class TeamController : MonoBehaviour
 
     public void SendMessageToUnit(UnitMessages message, Guid unitID)
     {
-        //messagesExchange[unitID] = message;
         if (!messagesExchange.ContainsKey(unitID))
         {
             messagesExchange.Add(unitID, message);
         }
+    }
+
+    public UnitMessages ReadMessage(Guid receivingUnitID)
+    {
+        if (messagesExchange.ContainsKey(receivingUnitID))
+        {
+            if (messagesExchange[receivingUnitID].emitter != receivingUnitID)
+            {
+                UnitMessages tmp = messagesExchange[receivingUnitID];
+                RemoveMessage(receivingUnitID);
+                return tmp;
+            }
+            else    //the receiver is the sender, so it's not concerned by receiving the message
+            {
+                RemoveMessage(receivingUnitID);
+                return null;
+            }
+        }
+        else
+            return null;
+    }
+
+    public void RemoveMessage(Guid unitID)
+    {
+        if (messagesExchange.ContainsKey(unitID))
+            messagesExchange.Remove(unitID);
     }
 }

@@ -1,25 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitMessages : MonoBehaviour
+public class UnitMessages
 {
-    private int emitter;
-    private MessageObject messageObject;    //specifies the type of response expected
-    private Dictionary<string, float> messageContents;
+    public Guid emitter;
+    public MessageObject messageObject;    //specifies the type of response expected
+    public Vector3 position;
+    public int urgency;
+    public UnitGeneral targetUnit;
+    
+    //public Dictionary<string, float> messageContents;
         //position x
         //position y
+        //position z
         //urgency
         //health of sender?
         //number of ennemies?
 
-    public UnitMessages (int _emitter, MessageObject _messageObject, Vector3 pos, float urgency = 0)
+    public UnitMessages (Guid _emitter, MessageObject _messageObject, Vector3 _position, UnitGeneral _targetUnit = null, int _urgency = 0)
     {
         emitter = _emitter;
         messageObject = _messageObject;
-        messageContents.Add("x_position", pos.x);
+        position = _position;
+        targetUnit = _targetUnit;
+        urgency = _urgency;
+        
+        /*messageContents.Add("x_position", pos.x);
         messageContents.Add("y_position", pos.y);
         messageContents.Add("z_position", pos.z);
-        messageContents.Add("urgency", urgency);
+        messageContents.Add("urgency", urgency);*/
     }
 }
