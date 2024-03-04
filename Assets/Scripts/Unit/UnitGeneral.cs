@@ -40,6 +40,7 @@ public class UnitGeneral : MonoBehaviour
 
     private void OnDisable()
     {
+        UnitSelectionController.Instance.Deselect(this);
         UnitSelectionController.Instance.RemoveUnit(this);
     }
 

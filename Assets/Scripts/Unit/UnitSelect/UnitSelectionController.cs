@@ -111,9 +111,9 @@ public class UnitSelectionController : MonoBehaviour
         changeUnitSelection?.Invoke();
     }
 
-    public void Deselect(GameObject unitToDeselect)
+    public void Deselect(UnitGeneral unitToDeselect)
     {
-        if (!unitsList.ContainsKey(unitToDeselect)) return;
-        unitsList.Remove(unitToDeselect);
+        if (!unitsSelected.Contains(unitToDeselect)) return;
+        unitsSelected.Remove(unitToDeselect);
     }
 }

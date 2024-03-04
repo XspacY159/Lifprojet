@@ -11,7 +11,9 @@ public class EnnemyBTSolver : MonoBehaviour
     [SerializeField]
     private UnitGeneral unit;
     private UnitGeneral targetUnit;
-    private Vector3 objective;
+    [SerializeField]
+    private POI targetObjective;
+    private Vector3 targetPosition;
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class EnnemyBTSolver : MonoBehaviour
 
     void Update()
     {
+        if (UnitSelectionController.Instance == null) return;
         switch (unit.baseState)
         {
             case AIState.Aggressive:
@@ -46,7 +49,9 @@ public class EnnemyBTSolver : MonoBehaviour
         {
             foreach (Collider unitInRange in unit.UnitsInRange())
             {
-                UnitGeneral tmp = unitInRange.gameObject.GetComponent<UnitGeneral>();
+                if (unitInRange.gameObject == unit.gameObject) continue;
+                //UnitGeneral tmp = unitInRange.gameObject.GetComponent<UnitGeneral>();
+                UnitGeneral tmp = UnitSelectionController.Instance.unitsList[unitInRange.gameObject];
                 if (tmp.GetTeam() != unit.GetTeam()) //Beware! GetComponent could be a performance problem!
                 {
                     targetUnit = tmp;
@@ -70,7 +75,7 @@ public class EnnemyBTSolver : MonoBehaviour
             case "attackAggressive":
                 //unit attacks
                 unit.AttackUnit(targetUnit);
-                if (Vector3.Distance(unit.transform.position, targetUnit.transform.position) > unit.GetStats().attackRange + 0.5)
+                if (targetUnit == null || Vector3.Distance(unit.transform.position, targetUnit.transform.position) > unit.GetStats().attackRange + 0.7)
                 {
                     tree.SwitchStateKey("combatAggressive", "noAdversary");
                     targetUnit = null;
@@ -80,7 +85,7 @@ public class EnnemyBTSolver : MonoBehaviour
             // == AI state is defensive
             case "defend":
                 //unit waits for an ennemy
-                objective = unit.transform.position;
+                targetPosition = unit.transform.position;
                 if (targetUnit != null)
                 {
                     tree.SwitchStateKey("defending", "fighting");
@@ -90,8 +95,8 @@ public class EnnemyBTSolver : MonoBehaviour
 
             case "backToDefense":
                 //the unit decided to stop its fight
-                unit.GoTo(objective);
-                if(Vector3.Distance(unit.transform.position, objective) < 0.5)
+                unit.GoTo(targetPosition);
+                if(Vector3.Distance(unit.transform.position, targetPosition) < 0.5)
                 {
                     tree.SwitchStateKey("defending", "waiting");
                 }
@@ -100,23 +105,47 @@ public class EnnemyBTSolver : MonoBehaviour
             case "attackDefense":
                 //if not too far from its objective, unit attacks
                 unit.AttackUnit(targetUnit);
-                if(Vector3.Distance(unit.transform.position, objective) > 2.0)
+                if(Vector3.Distance(unit.transform.position, targetPosition) > 2.0)
                 {
                     tree.SwitchStateKey("combatDefense", "noAdversary");
                     targetUnit = null;
                 }
                 break;
 
+
             // == AI state is followObjective
             case "move":
                 //unit follows its pathfinding to the specified objective
+                targetPosition = targetObjective.transform.position;
+                unit.GoTo(targetPosition);
+                if (Vector3.Distance(unit.transform.position, targetPosition) < 0.5)
+                {
+                    tree.SwitchStateKey("moveToObjective", "arrived");
+                    break;
+                }
+                if (targetUnit != null)
+                {
+                    targetPosition = unit.transform.position;
+                    tree.SwitchStateKey("moveToObjective", "fighting");
+                    tree.SwitchStateKey("combatObjective", "adversaryFound");
+                }
                 break;
             case "backToObjective":
                 //the unit decided to stop its fight
-                tree.SwitchStateKey("moveToObjective", "onTheMove");
+                unit.GoTo(targetPosition);
+                if (Vector3.Distance(unit.transform.position, targetPosition) < 0.5)
+                {
+                    tree.SwitchStateKey("moveToObjective", "onTheMove");
+                }
                 break;
             case "attackObjective":
                 //unit attacks
+                unit.AttackUnit(targetUnit);
+                if (Vector3.Distance(unit.transform.position, targetPosition) > 2.0)
+                {
+                    tree.SwitchStateKey("combatObjective", "noAdversary");
+                    targetUnit = null;
+                }
                 break;
             case "changeState":
                 //unit arrived to its destination, and switches state
