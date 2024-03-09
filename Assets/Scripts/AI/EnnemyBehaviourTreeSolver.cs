@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using InputProvider.Graph;
@@ -51,7 +49,7 @@ public class EnnemyBTSolver : MonoBehaviour
             {
                 if (unitInRange.gameObject == unit.gameObject) continue;
                 //UnitGeneral tmp = unitInRange.gameObject.GetComponent<UnitGeneral>();
-                UnitGeneral tmp = UnitSelectionController.Instance.unitsList[unitInRange.gameObject];
+                UnitGeneral tmp = UnitManager.Instance.GetUnit(unitInRange.gameObject);
                 if (tmp.GetTeam() != unit.GetTeam()) //Beware! GetComponent could be a performance problem!
                 {
                     targetUnit = tmp;

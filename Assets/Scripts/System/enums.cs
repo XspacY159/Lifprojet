@@ -3,7 +3,8 @@ public enum TeamName
     Draneds,
     Wasalis,
     Mercenaries,
-    Moonwolves
+    Moonwolves,
+    None
 }
 
 public enum MessageObject
@@ -19,4 +20,12 @@ public enum AIState
     Aggressive,
     Defensive,
     FollowObjective
+}
+
+[System.Flags]
+public enum WinCondition
+{
+    CaptureFlags = 1,
+    Countdown = 2,
+    KillAllEnemies = 4,
 }

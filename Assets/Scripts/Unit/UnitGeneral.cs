@@ -34,14 +34,14 @@ public class UnitGeneral : MonoBehaviour
 
     private IEnumerator OnEnableDelay()
     {
-        yield return new WaitUntil(() => UnitSelectionController.Instance != null);
-        UnitSelectionController.Instance.AddUnit(this);
+        yield return new WaitUntil(() => UnitManager.Instance != null);
+        UnitManager.Instance.AddUnit(this);
     }
 
     private void OnDisable()
     {
         UnitSelectionController.Instance.Deselect(this);
-        UnitSelectionController.Instance.RemoveUnit(this);
+        UnitManager.Instance.RemoveUnit(this);
     }
 
     private void Update()

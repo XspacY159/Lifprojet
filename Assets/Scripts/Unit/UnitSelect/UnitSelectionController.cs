@@ -4,43 +4,24 @@ using UnityEngine;
 
 public class UnitSelectionController : MonoBehaviour
 {
-    public Dictionary<GameObject, UnitGeneral> unitsList { get; private set; } 
-        = new Dictionary<GameObject, UnitGeneral>(); //Dictionnary of player's units
     private List<UnitGeneral> unitsSelected = new List<UnitGeneral>();
 
     // singleton of the selection
-    private static UnitSelectionController _instance;
-    public static UnitSelectionController Instance { get { return _instance; } }
+    public static UnitSelectionController Instance;
 
     public event Action changeUnitSelection;
 
     private void OnEnable()
     {
-        if (_instance != null && _instance != this)
+        if (Instance == null)
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
+            Instance = this;
         }
     }
 
     public List<UnitGeneral> GetUnitsSelected()
     {
         return unitsSelected; 
-    }
-
-    public void AddUnit(UnitGeneral unit)
-    {
-        if(!unitsList.ContainsKey(unit.gameObject))
-            unitsList.Add(unit.gameObject, unit);
-    }
-
-    public void RemoveUnit(UnitGeneral unit)
-    {
-        if (unitsList.ContainsKey(unit.gameObject))
-            unitsList.Remove(unit.gameObject);
     }
 
     public List<UnitGeneral> GetSelectedUnits()
@@ -51,31 +32,33 @@ public class UnitSelectionController : MonoBehaviour
     public void ClickSelect(GameObject unitToAdd)   //player selects only one unit
     {
         DeselectAll();
-        if (!unitsList.ContainsKey(unitToAdd)) return;
+        UnitGeneral unit = UnitManager.Instance.GetUnit(unitToAdd);
+        if (unit == null) return;
 
-        if (unitsList[unitToAdd].GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) return;
+        if (unit.GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) return;
 
-        unitsSelected.Add(unitsList[unitToAdd]);
+        unitsSelected.Add(unit);
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
         changeUnitSelection?.Invoke();
     }
 
     public void ShiftSelect(GameObject unitToAdd)   //player selects many units with shift pressed
     {
-        if (!unitsList.ContainsKey(unitToAdd)) return;
+        UnitGeneral unit = UnitManager.Instance.GetUnit(unitToAdd);
+        if (unit == null) return;
 
-        if (unitsList[unitToAdd].GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) return;
+        if (unit.GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) return;
 
-        if (!unitsSelected.Contains(unitsList[unitToAdd]))
+        if (!unitsSelected.Contains(unit))
         {
-            unitsSelected.Add(unitsList[unitToAdd]);
+            unitsSelected.Add(unit);
             unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
         }
         else
         {
             unitToAdd.transform.GetChild(0).gameObject.SetActive(false); //deactivates the highlight object
-            if (!unitsList.ContainsKey(unitToAdd)) return;
-            unitsSelected.Remove(unitsList[unitToAdd]);
+            if (unit == null) return;
+            unitsSelected.Remove(unit);
         }
 
         changeUnitSelection?.Invoke();
@@ -86,13 +69,14 @@ public class UnitSelectionController : MonoBehaviour
         int addedUnitsCount = 0;
         foreach (GameObject unitToAdd in unitsToAdd) 
         {
-            if (!unitsList.ContainsKey(unitToAdd)) continue;
+            UnitGeneral unit = UnitManager.Instance.GetUnit(unitToAdd);
+            if (unit == null) continue;
 
-            if (unitsList[unitToAdd].GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) continue;
+            if (unit.GetTeam() != GameInfoManager.Instance.GetPlayerTeam()) continue;
 
-            if (!unitsSelected.Contains(unitsList[unitToAdd]))  //the unit is not yet in the selected list
+            if (!unitsSelected.Contains(unit))  //the unit is not yet in the selected list
             {
-                unitsSelected.Add(unitsList[unitToAdd]);
+                unitsSelected.Add(unit);
                 unitToAdd.transform.GetChild(0).gameObject.SetActive(true); //activates the highlight object
                 addedUnitsCount++;
             }

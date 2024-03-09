@@ -54,13 +54,21 @@ public class Pathfinding : MonoBehaviour
 
         if(!TimerManager.StartTimer(pathUpdateTime, "PathFindUpdate" + pathfindingID))
         {
-            currentPath = GetPath(new Vector2(transform.position.x, transform.position.z),
-                new Vector2(target.x, target.z));
+            if(Vector3.Distance(transform.position, target) <= 1)
+            {
+                currentPath = new List<Vector3>{ transform.position, target };
+            }
+            else
+            {
+                currentPath = GetPath(new Vector2(transform.position.x, transform.position.z),
+                    new Vector2(target.x, target.z));       
+            }
+
             currentWaypointIndex = 1;
             OnPathfindingUpdate?.Invoke();
         }
 
-        if (currentPath.Count == 0) return;
+        if (currentPath.Count < 2) return;
 
         if (transform.position == currentPath[currentWaypointIndex] && currentWaypointIndex < currentPath.Count - 1)
             currentWaypointIndex++;

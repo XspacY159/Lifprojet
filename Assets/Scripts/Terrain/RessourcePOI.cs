@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 
-public class RessourcePOI : MonoBehaviour
+public class RessourcePOI : POI
 {
-    [SerializeField] private POI poi;
     [SerializeField] private float ressourcesCount;
     [SerializeField] private float maxRessources;
     [SerializeField] private float ressourceProductionRate;
@@ -12,13 +11,13 @@ public class RessourcePOI : MonoBehaviour
 
     private void OnEnable()
     {
-        poi.interactionEvent += OnInteraction;
+        interactionEvent += OnInteraction;
         ressourcesCount = 0;
     }
 
     private void OnDisable()
     {
-        poi.interactionEvent -= OnInteraction;
+        interactionEvent -= OnInteraction;
     }
 
     private void Update()
@@ -38,11 +37,9 @@ public class RessourcePOI : MonoBehaviour
 
     private void OnInteraction(Transform agent)
     {
-        UnitGeneral unit = UnitSelectionController.Instance.unitsList[agent.gameObject];
+        UnitGeneral unit = UnitManager.Instance.GetUnit(agent.gameObject);
 
         ressourcesCount -= unit.CollectRessources(ressourcesCount);
         unit.StopTryInteract();
-
-        Debug.Log(ressourcesCount);
     }
 }

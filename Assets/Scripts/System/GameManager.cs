@@ -112,6 +112,12 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public void TriggerGameOver()
+    {
+        //TODO
+        Debug.Log("Lost");
+    }
+
     public GameSettings GetGameSettings()
     {
         return gameSettings;

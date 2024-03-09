@@ -20,7 +20,7 @@ public class UnitInteractions : MonoBehaviour
             //Ordre des if/elseif important
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, unitLayer)) // Click on Unit
             {
-                MakeUnitsAttack(UnitSelectionController.Instance.unitsList[hit.collider.gameObject]);
+                MakeUnitsAttack(UnitManager.Instance.GetUnit(hit.collider.gameObject));
                 MakeUnitsStopTryToInteract();
             }
             else if (Physics.Raycast(ray, out hit, Mathf.Infinity, poiLayer)) // Click on POI
@@ -47,9 +47,22 @@ public class UnitInteractions : MonoBehaviour
         selectedUnits = UnitSelectionController.Instance.GetSelectedUnits();
 
         Vector3 moveToPosition = new Vector3(hit.point.x, 0, hit.point.z);
-        List<Vector3> targetPositionList = MathUtility.GetPositionsAround(moveToPosition, 0.2f, 0.7f, selectedUnits.Count);
+        List<Vector3> targetPositionList;
 
         int targetPositionListIndex = 0;
+
+        if(selectedUnits.Count == 1)
+        {
+            targetPositionList = MathUtility.GetPositionsAround(moveToPosition, 0.2f, 0.4f, 10);
+            targetPositionListIndex = UnityEngine.Random.Range(0, targetPositionList.Count);
+            Vector3 target = new Vector3(targetPositionList[targetPositionListIndex].x, selectedUnits[0].transform.position.y,
+                targetPositionList[targetPositionListIndex].z);
+            selectedUnits[0].GoTo(target);
+
+            return;
+        }
+
+        targetPositionList = MathUtility.GetPositionsAround(moveToPosition, 0.2f, 0.7f, selectedUnits.Count);
         foreach (UnitGeneral unit in selectedUnits)
         {
             targetPositionListIndex = (targetPositionListIndex + 1) % targetPositionList.Count;

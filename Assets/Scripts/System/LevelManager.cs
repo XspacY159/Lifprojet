@@ -27,17 +27,6 @@ public class LevelManager : MonoBehaviour
         LevelStart();
     }
 
-    private void Update()
-    {
-        //if (generateDungeonLevel && !PauseSystem.Instance.GetPauseState())
-        //{
-        //    if (Cursor.visible == true)
-        //        Cursor.visible = false;
-        //}
-        //else
-        //    Cursor.visible = true;
-    }
-
     public void PlaySoundEffect(AudioClip clip)
     {
         SoundManager.Instance.PlaySoundEffect(clip);

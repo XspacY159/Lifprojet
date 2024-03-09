@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class POI : MonoBehaviour
 {
-    [SerializeField] private float interactionRange = 1;
+    [SerializeField] protected float interactionRange = 1;
     public event Action<Transform> interactionEvent;
     public void Interact(Transform agent)
     {
