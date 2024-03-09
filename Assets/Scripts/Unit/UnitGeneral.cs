@@ -14,6 +14,8 @@ public class UnitGeneral : MonoBehaviour
     [SerializeField] protected UnitCombat unitCombat;
 
     [SerializeField] private float ressources;
+    public event Action<UnitGeneral> OnTryInteract;
+    public event Action<UnitGeneral> OnStopTryInteract;
 
     public AIState baseState;
 
@@ -74,6 +76,8 @@ public class UnitGeneral : MonoBehaviour
     {
         if (poi == null) return;
         poiToInteract = poi;
+
+        OnTryInteract?.Invoke(this);
     }
 
     public void StopTryInteract()
@@ -81,6 +85,7 @@ public class UnitGeneral : MonoBehaviour
         if (poiToInteract == null) return;
         poiToInteract.transform.GetChild(0).gameObject.SetActive(false);
         poiToInteract = null;
+        OnStopTryInteract?.Invoke(this);
     }
 
     public void GoTo(Vector3 pos)

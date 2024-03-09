@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\Terrain\TileType_SO.cs" />
     <Compile Include="Assets\Scripts\InputProviders\InputProviderBase.cs" />
     <Compile Include="Assets\Scripts\System\UnitManager.cs" />
+    <Compile Include="Assets\Scripts\Terrain\FlagPOI.cs" />
     <Compile Include="Assets\Scripts\AI\AITeamController.cs" />
     <Compile Include="Assets\Scripts\UI\UnitInfoDisplay.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\BaseIMNode.cs" />
