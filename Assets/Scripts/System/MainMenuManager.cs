@@ -19,7 +19,7 @@ public class MainMenuManager : LevelManager
     [SerializeField] private bool autoLoad;
     [SerializeField] private string sceneToLoad;
 
-    protected override void LevelStart()
+    public override void LevelStart()
     {
         masterSlider.onValueChanged.AddListener(val => SoundManager.Instance.ChangeMasterVolume(val));
         musicSlider.onValueChanged.AddListener(val => SoundManager.Instance.ChangeMusicVolume(val));

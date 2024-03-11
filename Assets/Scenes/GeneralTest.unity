@@ -18908,12 +18908,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tree: {fileID: 734626629}
   unit: {fileID: 734626635}
-<<<<<<< Updated upstream
   team: {fileID: 776571737}
   targetObjective: {fileID: 0}
-=======
-  targetObjective: {fileID: 2136053033}
->>>>>>> Stashed changes
 --- !u!114 &734626631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28915,7 +28911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicToPlay: {fileID: 8300000, guid: 1b48ba76bea309c4aa3dc18b87140925, type: 3}
-  winCondition: 1
+  winCondition: -1
   flagPOIList:
   - {fileID: 2136053033}
   countdown: 60
@@ -30092,6 +30088,7 @@ MonoBehaviour:
   captureTime: 5
   unitCaptureBoost: 0.2
   maxCaptureBoost: 2
+  captureRate: 0
 --- !u!1 &2143567326
 GameObject:
   m_ObjectHideFlags: 0

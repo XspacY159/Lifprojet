@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    protected virtual void LevelStart()
+    public virtual void LevelStart()
     {
 
     }

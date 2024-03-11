@@ -23,7 +23,7 @@ public class CampainLevelManager : LevelManager
             TimerManager.StartTimer(countdown, "Level Win Countdown");
     }
 
-    protected override void LevelStart()
+    private void Start()
     {
         foreach (TeamController team in UnitManager.Instance.GetTeamControllers())
         {
@@ -75,20 +75,20 @@ public class CampainLevelManager : LevelManager
         TeamName captureTeam = TeamName.None;
         foreach (FlagPOI flag in flagPOIList)
         {
-            TeamName flagCapturingTeam = flag.GetCaptureTeam();
+            TeamName flagCapturingTeam = flag.GetCapturingTeam();
             if (flagCapturingTeam == TeamName.None || flag.GetCaptureRate() < 1)
             {
                 conditionsMetByTeams[WinCondition.CaptureFlags] = null;
                 return;
             }
 
-            if (captureTeam != TeamName.None && flag.GetCaptureTeam() != captureTeam)
+            if (captureTeam != TeamName.None && flag.GetCapturingTeam() != captureTeam)
             {
                 conditionsMetByTeams[WinCondition.CaptureFlags] = null;
                 return;
             }
 
-            captureTeam = flag.GetCaptureTeam();
+            captureTeam = flag.GetCapturingTeam();
         }
 
         foreach (TeamController team in UnitManager.Instance.GetTeamControllers())

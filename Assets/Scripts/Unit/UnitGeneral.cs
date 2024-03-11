@@ -45,7 +45,6 @@ public class UnitGeneral : MonoBehaviour
 
     private void OnDisable()
     {
-        StopTryInteract();
         UnitSelectionController.Instance.Deselect(this);
         UnitManager.Instance.RemoveUnit(this);
     }
