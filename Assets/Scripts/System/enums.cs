@@ -12,7 +12,7 @@ public enum MessageObject
     GoToObjective,
     AttackTarget,
     DefendPosition,
-    UnitAttacked
+    //UnitAttacked  //unused for the time being
 }
 
 public enum AIState

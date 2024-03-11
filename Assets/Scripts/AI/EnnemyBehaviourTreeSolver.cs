@@ -6,19 +6,23 @@ public class EnnemyBTSolver : MonoBehaviour
 {
     [SerializeField]
     private IPTreeReader tree;
+
     [SerializeField]
     private UnitGeneral unit;
+    [SerializeField]
+    private AITeamController team;
+
+    private UnitMessages message;
+
     private UnitGeneral targetUnit;
     [SerializeField]
     private POI targetObjective;
     private Vector3 targetPosition;
 
+
     void Start()
     {
-        tree.SwitchStateKey("combatAggressive", "noAdversary");
-        tree.SwitchStateKey("defending", "waiting");
-        tree.SwitchStateKey("moveToObjective", "onTheMove");
-        targetUnit = null;
+        reset();
     }
 
     void Update()
@@ -39,6 +43,14 @@ public class EnnemyBTSolver : MonoBehaviour
         solve();
     }
 
+    public void reset()
+    {
+        tree.SwitchStateKey("combatAggressive", "noAdversary");
+        tree.SwitchStateKey("defending", "waiting");
+        tree.SwitchStateKey("moveToObjective", "onTheMove");
+        targetUnit = null;
+    }
+
     public void solve()
     {
         string currentNode = tree.ResolveGraph();
@@ -48,16 +60,14 @@ public class EnnemyBTSolver : MonoBehaviour
             foreach (Collider unitInRange in unit.UnitsInRange())
             {
                 if (unitInRange.gameObject == unit.gameObject) continue;
-                //UnitGeneral tmp = unitInRange.gameObject.GetComponent<UnitGeneral>();
                 UnitGeneral tmp = UnitManager.Instance.GetUnit(unitInRange.gameObject);
-                if (tmp.GetTeam() != unit.GetTeam()) //Beware! GetComponent could be a performance problem!
+                if (tmp.GetTeam() != unit.GetTeam())
                 {
                     targetUnit = tmp;
                     break;
                 }
             }
         }
-        
 
         switch (currentNode)
         {
@@ -67,6 +77,7 @@ public class EnnemyBTSolver : MonoBehaviour
                 if (targetUnit != null)
                 {
                     tree.SwitchStateKey("combatAggressive", "adversaryFound");
+                    team.SendMessageToAll(new UnitMessages(unit.GetUnitID(), MessageObject.AttackTarget, unit.transform.position, _targetUnit: targetUnit));
                 }
                 break;
 
@@ -152,6 +163,34 @@ public class EnnemyBTSolver : MonoBehaviour
 
         }
 
-        //Debug.Log(currentNode);
+        message = team.ReadMessage(unit.GetUnitID());
+        if (message != null)
+        {
+            if (message.priority >= unit.currentActionPriority)
+            {
+                switch (message.messageObject)
+                {
+                    case MessageObject.AttackTarget:
+                        reset();
+                        targetUnit = message.targetUnit;
+                        tree.SwitchStateKey("state", "aggressive");
+                        tree.SwitchStateKey("combatAggressive", "adversaryFound");
+                        break;
+                    case MessageObject.DefendPosition:
+                        reset();
+                        targetPosition = message.position;
+                        tree.SwitchStateKey("state", "defensive");
+                        tree.SwitchStateKey("combatDefense", "noAdversary");
+                        break;
+                    case MessageObject.GoToObjective:
+                        reset();
+                        targetObjective = message.targetObjective;
+                        if (targetObjective != null)
+                            tree.SwitchStateKey("state", "followObjective");
+                        break;
+                }
+            }
+            message = null;
+        }
     }
 }

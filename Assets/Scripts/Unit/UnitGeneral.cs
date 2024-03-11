@@ -14,10 +14,12 @@ public class UnitGeneral : MonoBehaviour
     [SerializeField] protected UnitCombat unitCombat;
 
     [SerializeField] private float ressources;
+
     public event Action<UnitGeneral> OnTryInteract;
     public event Action<UnitGeneral> OnStopTryInteract;
 
     public AIState baseState;
+    public int currentActionPriority;
 
     private POI poiToInteract;
     private Guid unitID = System.Guid.NewGuid();
@@ -29,6 +31,7 @@ public class UnitGeneral : MonoBehaviour
         StartCoroutine(OnEnableDelay());
 
         unitStats.SetStats(type.baseStats);
+        currentActionPriority = 0;
 
         MeshRenderer mR = GetComponent<MeshRenderer>(); //attempt to auto color units according to their type
         mR.sharedMaterial = type.typeMaterial;          //->currently unsuccessful

@@ -6747,6 +6747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tree: {fileID: 274457948}
   unit: {fileID: 274457954}
+  team: {fileID: 1320710275}
   targetObjective: {fileID: 0}
 --- !u!114 &274457950
 MonoBehaviour:
@@ -6838,6 +6839,7 @@ MonoBehaviour:
   unitCombat: {fileID: 274457951}
   ressources: 0
   baseState: 0
+  currentActionPriority: 0
   unitsLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -18906,6 +18908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tree: {fileID: 734626629}
   unit: {fileID: 734626635}
+  team: {fileID: 776571737}
   targetObjective: {fileID: 0}
 --- !u!114 &734626631
 MonoBehaviour:
@@ -18997,6 +19000,7 @@ MonoBehaviour:
   unitCombat: {fileID: 734626632}
   ressources: 0
   baseState: 1
+  currentActionPriority: 0
   unitsLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -19384,7 +19388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
-  units: []
+  units:
+  - {fileID: 734626635}
 --- !u!1 &789325938
 GameObject:
   m_ObjectHideFlags: 0
@@ -24001,7 +24006,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 2
-  units: []
+  units:
+  - {fileID: 4436293541402607537}
+  - {fileID: 274457954}
 --- !u!4 &1320710276
 Transform:
   m_ObjectHideFlags: 0
@@ -30374,6 +30381,7 @@ MonoBehaviour:
   unitCombat: {fileID: 6571789670661119402}
   ressources: 0
   baseState: 0
+  currentActionPriority: 0
   unitsLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -30540,6 +30548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tree: {fileID: 7162393416978291784}
   unit: {fileID: 4436293541402607537}
+  team: {fileID: 1320710275}
   targetObjective: {fileID: 0}
 --- !u!114 &7162393416978291784
 MonoBehaviour:
