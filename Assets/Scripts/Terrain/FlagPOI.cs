@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FlagPOI : POI
@@ -6,13 +8,13 @@ public class FlagPOI : POI
     [SerializeField] private float captureTime;
     [SerializeField] private float unitCaptureBoost;
     [SerializeField] private float maxCaptureBoost;
-    [SerializeField] private float captureRate = 0;
-    private TeamName currentCapturingTeam;
-    private List<UnitGeneral> capuringUnits = new List<UnitGeneral>();
+
+    private Dictionary<TeamName, List<UnitGeneral>> capuringUnits = new Dictionary<TeamName, List<UnitGeneral>>();
+    private Dictionary<TeamName, float> captureRates = new Dictionary<TeamName, float>();
+    private List<TeamName> capturingTeams = new List<TeamName>();
 
     private void OnEnable()
     {
-        currentCapturingTeam = TeamName.None;
         interactionEvent += OnInteraction;
     }
 
@@ -23,59 +25,95 @@ public class FlagPOI : POI
 
     private void Update()
     {
-        float captureDelta;
-        if (capuringUnits.Count == 0)
+        foreach (TeamName team in capuringUnits.Keys)
         {
-            currentCapturingTeam = TeamName.None;
-            if (captureTime == 0)
+            if (capuringUnits[team].Count == 0 && capturingTeams.Contains(team))
             {
-                captureRate = 0;
-                return;
+                capturingTeams.Remove(team);
             }
-            captureDelta = - Time.deltaTime / captureTime;
-        }
-        else
-        {
-            if (captureTime == 0)
-            {
-                captureRate = 1;
-                return;
-            }
-            float captureBoost = Mathf.Clamp(1 + (capuringUnits.Count - 1) * unitCaptureBoost, 0, maxCaptureBoost);
-            captureDelta = captureBoost * Time.deltaTime / captureTime;
         }
 
-        captureRate += captureDelta;
-        captureRate = Mathf.Clamp(captureRate, 0, 1);
+        foreach (TeamName team in capuringUnits.Keys)
+        {
+            float captureDelta = 0;
+            if (capuringUnits[team].Count == 0)
+            {
+                if (captureTime == 0)
+                {
+                    captureRates[team] = 0;
+                    return;
+                }
+
+                if (captureRates[team] < 1 || (!capturingTeams.Contains(team) && capturingTeams.Count > 0))
+                    captureDelta = -Time.deltaTime / captureTime;
+            }
+            else
+            {
+                if (captureTime == 0)
+                {
+                    captureRates[team] = 1;
+                    return;
+                }
+                float captureBoost = Mathf.Clamp(1 + (capuringUnits[team].Count - 1) * unitCaptureBoost, 0, maxCaptureBoost);
+                captureDelta = captureBoost * Time.deltaTime / captureTime;
+            }
+
+            if(capturingTeams.Count < 2)
+            {
+                captureRates[team] += captureDelta;
+                captureRates[team] = Mathf.Clamp(captureRates[team], 0, 1);
+            }
+            Debug.Log(team + " : " + captureRates[team]);
+        }
     }
 
     private void OnInteraction(Transform agent)
     {
         UnitGeneral unit = UnitManager.Instance.GetUnit(agent.gameObject);
+        TeamName unitTeam = unit.GetTeam();
 
-        if (currentCapturingTeam != TeamName.None && unit.GetTeam() != currentCapturingTeam)
-            return;
+        if(!captureRates.ContainsKey(unitTeam))
+            captureRates.Add(unitTeam, 0);
 
-        if (!capuringUnits.Contains(unit))
-            capuringUnits.Add(unit);
-        currentCapturingTeam = unit.GetTeam();
+        if (!capuringUnits.ContainsKey(unitTeam))
+        {
+            List<UnitGeneral> units = new List<UnitGeneral>{ unit };
+            capuringUnits.Add(unitTeam, units);
+        }
+        else
+        {
+            capuringUnits[unitTeam].Add(unit);
+        }
+
+        if (!capturingTeams.Contains(unitTeam))
+            capturingTeams.Add(unitTeam);
+
         unit.OnStopTryInteract += OnUnitStopTryInteract;
     }
 
     private void OnUnitStopTryInteract(UnitGeneral unit)
     {
-        if (capuringUnits.Contains(unit))
-            capuringUnits.Remove(unit);
+        TeamName unitTeam = unit.GetTeam();
+
+        if (capuringUnits.ContainsKey(unitTeam) && capuringUnits[unitTeam].Contains(unit))
+            capuringUnits[unitTeam].Remove(unit);
+
         unit.OnStopTryInteract -= OnUnitStopTryInteract;
     }
 
     public float GetCaptureRate()
     {
-        return captureRate;
+        return captureRates.Values.Max();
     }
 
-    public TeamName GetCapturingTeam()
+    internal TeamName GetCaptureTeam()
     {
-        return currentCapturingTeam;
+        foreach (TeamName team in captureRates.Keys)
+        {
+            if (captureRates[team] == 1)
+                return team;
+        }
+
+        return TeamName.None;
     }
 }
