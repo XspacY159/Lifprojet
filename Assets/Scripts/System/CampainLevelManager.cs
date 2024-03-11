@@ -8,7 +8,7 @@ public class CampainLevelManager : LevelManager
     [SerializeField] private float countdown;
 
     private Dictionary<WinCondition, TeamController> conditionsMetByTeams = new Dictionary<WinCondition, TeamController>();
- 
+
     private bool winConditionMet;
     private TeamController playerTeam;
     private TeamController winner;
@@ -23,7 +23,7 @@ public class CampainLevelManager : LevelManager
             TimerManager.StartTimer(countdown, "Level Win Countdown");
     }
 
-    private void Start()
+    protected override void LevelStart()
     {
         foreach (TeamController team in UnitManager.Instance.GetTeamControllers())
         {
@@ -58,7 +58,7 @@ public class CampainLevelManager : LevelManager
             if (conditionsMetByTeams[condition] == null)
                 return;
 
-            if(winner != null && winner != conditionsMetByTeams[condition])
+            if (winner != null && winner != conditionsMetByTeams[condition])
             {
                 return;
             }
@@ -75,25 +75,25 @@ public class CampainLevelManager : LevelManager
         TeamName captureTeam = TeamName.None;
         foreach (FlagPOI flag in flagPOIList)
         {
-            TeamName flagCapturingTeam = flag.GetCapturingTeam();
+            TeamName flagCapturingTeam = flag.GetCaptureTeam();
             if (flagCapturingTeam == TeamName.None || flag.GetCaptureRate() < 1)
             {
                 conditionsMetByTeams[WinCondition.CaptureFlags] = null;
                 return;
             }
 
-            if (captureTeam != TeamName.None && flag.GetCapturingTeam() != captureTeam)
+            if (captureTeam != TeamName.None && flag.GetCaptureTeam() != captureTeam)
             {
                 conditionsMetByTeams[WinCondition.CaptureFlags] = null;
                 return;
             }
 
-            captureTeam = flag.GetCapturingTeam();
+            captureTeam = flag.GetCaptureTeam();
         }
 
         foreach (TeamController team in UnitManager.Instance.GetTeamControllers())
         {
-            if(team.GetTeamName() == captureTeam)
+            if (team.GetTeamName() == captureTeam)
             {
                 conditionsMetByTeams[WinCondition.CaptureFlags] = team;
                 return;
@@ -113,7 +113,7 @@ public class CampainLevelManager : LevelManager
                 aliveTeamsCount++;
             }
         }
-        if(aliveTeamsCount == 1)
+        if (aliveTeamsCount == 1)
         {
             conditionsMetByTeams[WinCondition.KillAllEnemies] = aliveTeam;
         }
