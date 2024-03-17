@@ -63,7 +63,7 @@ public class FlagPOI : POI
                 captureRates[team] += captureDelta;
                 captureRates[team] = Mathf.Clamp(captureRates[team], 0, 1);
             }
-            Debug.Log(team + " : " + captureRates[team]);
+            //Debug.Log(team + " : " + captureRates[team]);
         }
     }
 

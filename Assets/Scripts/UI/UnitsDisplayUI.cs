@@ -12,7 +12,6 @@ public class UnitsDisplayUI : MonoBehaviour
 
     private void OnEnable()
     {
-        unitInfoContainer.gameObject.SetActive(false);
         StartCoroutine(OnEnableDelay());
     }
 
@@ -39,11 +38,9 @@ public class UnitsDisplayUI : MonoBehaviour
 
         if (selectedUnits.Count == 0)
         {
-            unitInfoContainer.gameObject.SetActive(false);
             return;
         }
 
-        unitInfoContainer.gameObject.SetActive(true);
         foreach (UnitGeneral unit in selectedUnits)
         {
             UnitInfoDisplay unitInfoDisplay = Instantiate(infoDisplayPrefab, unitInfoContainer, false);

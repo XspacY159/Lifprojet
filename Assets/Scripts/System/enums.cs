@@ -29,3 +29,10 @@ public enum WinCondition
     Countdown = 2,
     KillAllEnemies = 4,
 }
+
+[System.Flags]
+public enum LosingCondition
+{
+    AllUnitsDead = 1,
+    FlagsTaken = 2,
+}
