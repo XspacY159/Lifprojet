@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 public class AITeamController : TeamController
 {
-    //private Dictionary<Guid, UnitGeneral> units = new Dictionary<Guid, UnitGeneral>();
-    //private List<UnitMessages> messagesExchange = new List<UnitMessages>();
+    //stocks the messages of the team, guid refers to units ID
     private Dictionary<Guid, UnitMessages> messagesExchange = new Dictionary<Guid, UnitMessages>();
+    //stocks the groups of the team, guid refers to groups ID
+    private Dictionary<Guid, GroupController> unitsGroups = new Dictionary<Guid, GroupController>();
 
     public void SendMessageToAll(UnitMessages message)
     {
@@ -50,5 +51,10 @@ public class AITeamController : TeamController
     {
         if (messagesExchange.ContainsKey(unitID))
             messagesExchange.Remove(unitID);
+    }
+
+    public void JoinGroup(UnitGeneral joiningUnit, Guid groupToJoin)
+    {
+        unitsGroups[groupToJoin].AddUnit(joiningUnit);
     }
 }
