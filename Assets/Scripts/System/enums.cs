@@ -12,6 +12,9 @@ public enum MessageObject
     GoToObjective,
     AttackTarget,
     DefendPosition,
+    AskGroup,
+    JoinGroup,
+    LeaveGroup,
     //UnitAttacked  //unused for the time being
 }
 

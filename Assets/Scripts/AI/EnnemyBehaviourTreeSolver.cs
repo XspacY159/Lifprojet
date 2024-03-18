@@ -19,28 +19,34 @@ public class EnnemyBTSolver : MonoBehaviour
     private POI targetObjective;
     private Vector3 targetPosition;
 
+    private bool treeEnabled;
+
 
     void Start()
     {
         reset();
+        treeEnabled = true;
     }
 
     void Update()
     {
         if (UnitSelectionController.Instance == null) return;
-        switch (unit.baseState)
+        if (treeEnabled)
         {
-            case AIState.Aggressive:
-                tree.SwitchStateKey("state", "aggressive");
-                break;
-            case AIState.Defensive:
-                tree.SwitchStateKey("state", "defensive");
-                break;
-            case AIState.FollowObjective:
-                tree.SwitchStateKey("state", "followObjective");
-                break;
+            switch (unit.baseState)
+            {
+                case AIState.Aggressive:
+                    tree.SwitchStateKey("state", "aggressive");
+                    break;
+                case AIState.Defensive:
+                    tree.SwitchStateKey("state", "defensive");
+                    break;
+                case AIState.FollowObjective:
+                    tree.SwitchStateKey("state", "followObjective");
+                    break;
+            }
+            solve();
         }
-        solve();
     }
 
     public void reset()
@@ -159,6 +165,7 @@ public class EnnemyBTSolver : MonoBehaviour
             case "changeState":
                 //unit arrived to its destination, and switches state
                 tree.SwitchStateKey("state","defensive");
+                unit.baseState = AIState.Defensive;
                 break;
 
         }
@@ -187,6 +194,11 @@ public class EnnemyBTSolver : MonoBehaviour
                         targetObjective = message.targetObjective;
                         if (targetObjective != null)
                             tree.SwitchStateKey("state", "followObjective");
+                        break;
+                    case MessageObject.JoinGroup:
+                        reset();
+                        treeEnabled = false;
+                        team.JoinGroup(unit, message.groupID);
                         break;
                 }
             }

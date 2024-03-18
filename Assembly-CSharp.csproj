@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\System\GameManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitGeneral.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitType_SO.cs" />
+    <Compile Include="Assets\Scripts\AI\GroupBehaviourTreeSolver.cs" />
     <Compile Include="Assets\Scripts\System\LevelManager.cs" />
     <Compile Include="Assets\Scripts\InputProviders\Graph\InputMiddlewareNode.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputActions.cs" />
