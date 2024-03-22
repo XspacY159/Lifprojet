@@ -6,6 +6,7 @@ public class CampainLevelManager : LevelManager
 {
     [Header("Conditions Parameters")]
     [SerializeField] private WinCondition winCondition;
+    [SerializeField] private DefeatCondition defeatCondition;
     [SerializeField] private List<FlagPOI> flagPOIList = new List<FlagPOI>();
     [SerializeField] private float countdown;
 
@@ -54,6 +55,7 @@ public class CampainLevelManager : LevelManager
     private void FixedUpdate()
     {
         CheckVictoryCondition();
+        CheckDefeatCondition();
     }
 
     private void Update()
@@ -123,6 +125,15 @@ public class CampainLevelManager : LevelManager
         }
     }
 
+    private void CheckDefeatCondition()
+    {
+        if(defeatCondition.HasFlag(DefeatCondition.AllUnitsDead) && playerTeam.GetUnits().Count == 0)
+            loseScreen.SetActive(true);
+
+        if (defeatCondition.HasFlag(DefeatCondition.FlagsTaken) && CapturedFlags() != playerTeam)
+            loseScreen.SetActive(true);
+    }
+
     private void CheckVictoryCondition()
     {
         if (UnitManager.Instance == null) return;
@@ -130,9 +141,9 @@ public class CampainLevelManager : LevelManager
         if (winConditionMet) return;
 
         if (winCondition.HasFlag(WinCondition.KillAllEnemies))
-            AllUnitsDead();
+            conditionsMetByTeams[WinCondition.KillAllEnemies] = AllUnitsDead();
         if (winCondition.HasFlag(WinCondition.CaptureFlags))
-            CapturedFlags();
+            conditionsMetByTeams[WinCondition.CaptureFlags] = CapturedFlags();
         if (winCondition.HasFlag(WinCondition.Countdown))
         {
             if (TimerManager.IsCounting("Level Win Countdown"))
@@ -167,7 +178,7 @@ public class CampainLevelManager : LevelManager
         }
     }
 
-    private void CapturedFlags()
+    private TeamController CapturedFlags()
     {
         TeamName captureTeam = TeamName.None;
         foreach (FlagPOI flag in flagPOIList)
@@ -175,14 +186,12 @@ public class CampainLevelManager : LevelManager
             TeamName flagCapturingTeam = flag.GetCaptureTeam();
             if (flagCapturingTeam == TeamName.None || flag.GetCaptureRate() < 1)
             {
-                conditionsMetByTeams[WinCondition.CaptureFlags] = null;
-                return;
+                return null;
             }
 
             if (captureTeam != TeamName.None && flag.GetCaptureTeam() != captureTeam)
             {
-                conditionsMetByTeams[WinCondition.CaptureFlags] = null;
-                return;
+                return null;
             }
 
             captureTeam = flag.GetCaptureTeam();
@@ -192,13 +201,14 @@ public class CampainLevelManager : LevelManager
         {
             if (team.GetTeamName() == captureTeam)
             {
-                conditionsMetByTeams[WinCondition.CaptureFlags] = team;
-                return;
+                return team;
             }
         }
+
+        return null;
     }
 
-    private void AllUnitsDead()
+    private TeamController AllUnitsDead()
     {
         TeamController aliveTeam = null;
         int aliveTeamsCount = 0;
@@ -212,11 +222,11 @@ public class CampainLevelManager : LevelManager
         }
         if (aliveTeamsCount == 1)
         {
-            conditionsMetByTeams[WinCondition.KillAllEnemies] = aliveTeam;
+            return aliveTeam;
         }
         else
         {
-            conditionsMetByTeams[WinCondition.KillAllEnemies] = null;
+            return null;
         }
     }
 }

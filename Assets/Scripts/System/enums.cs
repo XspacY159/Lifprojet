@@ -31,7 +31,7 @@ public enum WinCondition
 }
 
 [System.Flags]
-public enum LosingCondition
+public enum DefeatCondition
 {
     AllUnitsDead = 1,
     FlagsTaken = 2,

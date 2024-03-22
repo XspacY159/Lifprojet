@@ -31115,7 +31115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicToPlay: {fileID: 0}
-  winCondition: 4
+  winCondition: 1
+  defeatCondition: 1
   flagPOIList:
   - {fileID: 2136053033}
   countdown: 10
