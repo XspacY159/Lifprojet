@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using XNode;
 
 namespace InputProvider.Graph
@@ -14,6 +14,7 @@ namespace InputProvider.Graph
 
         private bool startNodeExists = false;
         private BaseNode startNode;
+        public event Action<string> onStateKeyChanged;
 
         private void OnEnable()
         {
@@ -103,6 +104,7 @@ namespace InputProvider.Graph
             }
 
             stateKeysList[MWName][stateKey] = true;
+            onStateKeyChanged?.Invoke(stateKey);
         }
 
         public string GetIMSwitchesState(string MWName) //Return Input Middleware Active switch/statekey
