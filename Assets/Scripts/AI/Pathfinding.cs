@@ -118,6 +118,11 @@ public class Pathfinding : MonoBehaviour
                 walls.Add(new int2(50 + posInt.x - intCurrentPos.x, 50 + posInt.y - intCurrentPos.y));
             }
         }
+        if(walls.Contains(new int2(intTarget.x, intTarget.y)))
+        {
+            enablePathfinding = false;
+            return null;
+        }
 
         float startTime = Time.realtimeSinceStartup;
 

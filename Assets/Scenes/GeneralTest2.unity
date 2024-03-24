@@ -19978,7 +19978,7 @@ MonoBehaviour:
   tree: {fileID: 734626629}
   unit: {fileID: 734626635}
   team: {fileID: 776571737}
-  targetObjective: {fileID: 0}
+  targetObjective: {fileID: 2136053033}
 --- !u!114 &734626631
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,38 +1,53 @@
 using UnityEngine;
 using System;
 using InputProvider.Graph;
+using Unity.VisualScripting;
+using UnityEditorInternal;
+using UnityEngine.InputSystem;
 
 public class EnnemyBTSolver : MonoBehaviour
 {
-    [SerializeField]
-    private IPTreeReader tree;
-
-    [SerializeField]
-    private UnitGeneral unit;
-    [SerializeField]
-    private AITeamController team;
-
-    private UnitMessages message;
-
-    private UnitGeneral targetUnit;
-    [SerializeField]
-    private POI targetObjective;
-    private Vector3 targetPosition;
-
+    [Header("Unit Components")]
+    [SerializeField] private UnitGeneral unit;
+    [SerializeField] private AITeamController team;
+    [SerializeField] private IPTreeReader tree;
     private bool treeEnabled;
 
+    [Header("Objectives")]
+    [SerializeField] private POI targetObjective;
+    //On pourra rajouter des potentiels POI ici (une liste de POI?)
+
+    private UnitMessages message;
+    private UnitGeneral targetUnit;
+    private Vector3 targetPosition;
+    private Vector3 defensiveRoamPoint;
+    private AIState currentBaseState;
+
+    private void OnEnable()
+    {
+        tree.onStateKeyChanged += OnStateKeyChanged;
+        defensiveRoamPoint = transform.position;
+    }
+
+    private void OnDisable()
+    {
+        tree.onStateKeyChanged -= OnStateKeyChanged;
+    }
 
     void Start()
     {
-        reset();
+        ResetState();
         treeEnabled = true;
     }
 
     void Update()
     {
         if (UnitSelectionController.Instance == null) return;
-        if (treeEnabled)
+        if (!treeEnabled) return;
+
+        if (currentBaseState != unit.baseState)
         {
+            currentBaseState = unit.baseState;
             switch (unit.baseState)
             {
                 case AIState.Aggressive:
@@ -46,11 +61,12 @@ public class EnnemyBTSolver : MonoBehaviour
                     tree.SwitchStateKey("state", "followObjective");
                     break;
             }
-            solve();
+
         }
+        Solve();
     }
 
-    public void reset()
+    public void ResetState()
     {
         tree.SwitchStateKey("combatAggressive", "noAdversary");
         tree.SwitchStateKey("defending", "waiting");
@@ -58,7 +74,7 @@ public class EnnemyBTSolver : MonoBehaviour
         targetUnit = null;
     }
 
-    public void solve()
+    public void Solve()
     {
         string currentNode = tree.ResolveGraph();
 
@@ -85,6 +101,7 @@ public class EnnemyBTSolver : MonoBehaviour
             // == AI state is aggressive
             case "idleAggressive":
                 //unit waits for an ennemy
+                Roam(7, transform.position);
                 if (targetUnit != null)
                 {
                     tree.SwitchStateKey("combatAggressive", "adversaryFound");
@@ -105,6 +122,7 @@ public class EnnemyBTSolver : MonoBehaviour
             // == AI state is defensive
             case "defend":
                 //unit waits for an ennemy
+                Roam(2, defensiveRoamPoint);
                 targetPosition = unit.transform.position;
                 if (targetUnit != null)
                 {
@@ -132,12 +150,12 @@ public class EnnemyBTSolver : MonoBehaviour
                 }
                 break;
 
-
             // == AI state is followObjective
             case "move":
                 //unit follows its pathfinding to the specified objective
                 targetPosition = targetObjective.transform.position;
                 unit.GoTo(targetPosition);
+                unit.TryInteract(targetObjective);
                 if (Vector3.Distance(unit.transform.position, targetPosition) < 0.5)
                 {
                     tree.SwitchStateKey("moveToObjective", "arrived");
@@ -175,6 +193,7 @@ public class EnnemyBTSolver : MonoBehaviour
 
         }
 
+        //Messages
         message = team.ReadMessage(unit.GetUnitID());
         if (message != null)
         {
@@ -183,21 +202,21 @@ public class EnnemyBTSolver : MonoBehaviour
                 switch (message.messageObject)
                 {
                     case MessageObject.AttackTarget:
-                        reset();
+                        ResetState();
                         targetUnit = message.targetUnit;
                         tree.SwitchStateKey("state", "aggressive");
                         tree.SwitchStateKey("combatAggressive", "adversaryFound");
                         break;
 
                     case MessageObject.DefendPosition:
-                        reset();
+                        ResetState();
                         targetPosition = message.position;
                         tree.SwitchStateKey("state", "defensive");
                         tree.SwitchStateKey("combatDefense", "noAdversary");
                         break;
 
                     case MessageObject.GoToObjective:
-                        reset();
+                        ResetState();
                         targetObjective = message.targetObjective;
                         if (targetObjective != null)
                             tree.SwitchStateKey("state", "followObjective");
@@ -215,7 +234,7 @@ public class EnnemyBTSolver : MonoBehaviour
                         break;
 
                     case MessageObject.JoinGroup:
-                        reset();
+                        ResetState();
                         treeEnabled = false;
                         team.JoinGroup(unit, message.groupID);
                         break;
@@ -223,5 +242,24 @@ public class EnnemyBTSolver : MonoBehaviour
             }
             message = null;
         }
+    }
+
+    private void Roam(float maxDistance, Vector3 fixedPoint)
+    {
+        if (!TimerManager.StartTimer(3, "RandRoam" + unit.GetUnitID()))
+        {
+            float randX = Mathf.Clamp(fixedPoint.x + Random.Range(-maxDistance, maxDistance), 
+                0, TerrainManager.Instance.GetTerrainSize().x - 1);
+            float randZ = Mathf.Clamp(fixedPoint.z + Random.Range(-maxDistance, maxDistance),
+                0, TerrainManager.Instance.GetTerrainSize().y - 1);
+            Vector3 randPos = new Vector3(randX, 0, randZ);
+            unit.GoTo(randPos);
+        }
+    }
+
+    private void OnStateKeyChanged(string key)
+    {
+        if (key == "defend") defensiveRoamPoint = transform.position;
+        TimerManager.Cancel("RandRoam" + unit.GetUnitID());
     }
 }
