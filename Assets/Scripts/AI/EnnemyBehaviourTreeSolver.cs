@@ -223,8 +223,11 @@ public class EnnemyBTSolver : MonoBehaviour
                         break;
 
                     case MessageObject.AskGroup:
+                        Debug.Log("asking for group creation");
                         if (message.emitter.CompareTo(unit.GetUnitID()) > 0)
                         {
+                            ResetState();
+                            treeEnabled = false;
                             Guid newGroup = team.CreateGroup();
                             team.JoinGroup(unit, newGroup);
                             team.SendMessageToUnit(
@@ -237,6 +240,7 @@ public class EnnemyBTSolver : MonoBehaviour
                         ResetState();
                         treeEnabled = false;
                         team.JoinGroup(unit, message.groupID);
+                        Debug.Log("joined a group");
                         break;
                 }
             }
@@ -248,9 +252,9 @@ public class EnnemyBTSolver : MonoBehaviour
     {
         if (!TimerManager.StartTimer(3, "RandRoam" + unit.GetUnitID()))
         {
-            float randX = Mathf.Clamp(fixedPoint.x + Random.Range(-maxDistance, maxDistance), 
+            float randX = Mathf.Clamp(fixedPoint.x + UnityEngine.Random.Range(-maxDistance, maxDistance), 
                 0, TerrainManager.Instance.GetTerrainSize().x - 1);
-            float randZ = Mathf.Clamp(fixedPoint.z + Random.Range(-maxDistance, maxDistance),
+            float randZ = Mathf.Clamp(fixedPoint.z + UnityEngine.Random.Range(-maxDistance, maxDistance),
                 0, TerrainManager.Instance.GetTerrainSize().y - 1);
             Vector3 randPos = new Vector3(randX, 0, randZ);
             unit.GoTo(randPos);

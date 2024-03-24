@@ -21,8 +21,9 @@ public class AITeamController : TeamController
 
     public void SendMessageToUnit(UnitMessages message, Guid unitID)
     {
-        if (!messagesExchange.ContainsKey(unitID))
+        if ((!messagesExchange.ContainsKey(unitID)) || (message.priority > 4))
         {
+            RemoveMessage(unitID);
             messagesExchange.Add(unitID, message);
         }
     }
