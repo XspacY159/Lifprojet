@@ -3,15 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroupController : MonoBehaviour
+public class GroupController
 {
     private List<UnitGeneral> group = new List<UnitGeneral> ();
     private Guid groupID = System.Guid.NewGuid();
 
-    // Update is called once per frame
-    void Update()
+    public GroupController()
     {
-        
+        Debug.Log("group created");
     }
 
     public Guid GetID()

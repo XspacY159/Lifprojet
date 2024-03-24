@@ -25,13 +25,20 @@ public class UnitMessages
         groupID = Guid.Empty;
     }
 
-    //constructor specific to the group messages
-    //required because guid cannot be initialized empty in the declaration
-    public UnitMessages(Guid _emitter, MessageObject _messageObject, Vector3 _position, Guid _groupID, int _priority = 0)
+    public UnitMessages(Guid _emitter, MessageObject _messageObject, int _priority = 0)
     {
         emitter = _emitter;
         messageObject = _messageObject;
-        position = _position;
+        priority = _priority;
+    }
+
+    //constructor specific to the group messages
+    //required because guid cannot be initialized empty in the declaration
+    public UnitMessages(Guid _emitter, MessageObject _messageObject, Guid _groupID, int _priority = 0)
+    {
+        emitter = _emitter;
+        messageObject = _messageObject;
+        position = Vector3.zero;
         groupID = _groupID;
         priority = _priority;
     }

@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 using InputProvider.Graph;
 
 public class EnnemyBTSolver : MonoBehaviour
@@ -39,6 +39,7 @@ public class EnnemyBTSolver : MonoBehaviour
                     tree.SwitchStateKey("state", "aggressive");
                     break;
                 case AIState.Defensive:
+                    unit.currentActionPriority = 2;
                     tree.SwitchStateKey("state", "defensive");
                     break;
                 case AIState.FollowObjective:
@@ -71,6 +72,10 @@ public class EnnemyBTSolver : MonoBehaviour
                 {
                     targetUnit = tmp;
                     break;
+                }
+                else
+                {
+                    team.SendMessageToUnit(new UnitMessages(unit.GetUnitID(), MessageObject.AskGroup), tmp.GetUnitID());
                 }
             }
         }
@@ -183,18 +188,32 @@ public class EnnemyBTSolver : MonoBehaviour
                         tree.SwitchStateKey("state", "aggressive");
                         tree.SwitchStateKey("combatAggressive", "adversaryFound");
                         break;
+
                     case MessageObject.DefendPosition:
                         reset();
                         targetPosition = message.position;
                         tree.SwitchStateKey("state", "defensive");
                         tree.SwitchStateKey("combatDefense", "noAdversary");
                         break;
+
                     case MessageObject.GoToObjective:
                         reset();
                         targetObjective = message.targetObjective;
                         if (targetObjective != null)
                             tree.SwitchStateKey("state", "followObjective");
                         break;
+
+                    case MessageObject.AskGroup:
+                        if (message.emitter.CompareTo(unit.GetUnitID()) > 0)
+                        {
+                            Guid newGroup = team.CreateGroup();
+                            team.JoinGroup(unit, newGroup);
+                            team.SendMessageToUnit(
+                                new UnitMessages(unit.GetUnitID(), MessageObject.JoinGroup, newGroup, 5),
+                                message.emitter);
+                        }
+                        break;
+
                     case MessageObject.JoinGroup:
                         reset();
                         treeEnabled = false;

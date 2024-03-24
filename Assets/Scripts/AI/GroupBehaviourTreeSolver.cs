@@ -39,7 +39,7 @@ public class GroupBehaviourTreeSolver : MonoBehaviour
         tree.SwitchStateKey("combatAggressive", "noAdversary");
         tree.SwitchStateKey("defending", "waiting");
         tree.SwitchStateKey("moveToObjective", "onTheMove");
-        targetUnit = null;
+        //targetUnit = null;
     }
 
     public void solve()

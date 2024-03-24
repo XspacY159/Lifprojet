@@ -53,6 +53,14 @@ public class AITeamController : TeamController
             messagesExchange.Remove(unitID);
     }
 
+    public Guid CreateGroup()
+    {
+        GroupController newGroup = new GroupController();
+
+        unitsGroups.Add(newGroup.GetID(), newGroup);
+        return newGroup.GetID();
+    }
+
     public void JoinGroup(UnitGeneral joiningUnit, Guid groupToJoin)
     {
         unitsGroups[groupToJoin].AddUnit(joiningUnit);
