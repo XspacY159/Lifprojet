@@ -12,7 +12,6 @@ namespace InputProvider.Graph
         private Dictionary<string, Dictionary<string, bool>> stateKeysList = 
             new Dictionary<string, Dictionary<string, bool>>();
 
-        private bool startNodeExists = false;
         private BaseNode startNode;
         public event Action<string> onStateKeyChanged;
 
@@ -35,22 +34,11 @@ namespace InputProvider.Graph
                 }
                 stateKeysList.Add(((InputMiddlewareNode)node).MWName, stateKeySwitches);
             }
-
-            startNodeExists = false;
-            foreach (BaseNode node in ipGraph.nodes)
-            {
-                if (node.GetNodeType() == NodeType.start)
-                {
-                    startNodeExists = true;
-                    startNode = node;
-                    break;
-                }
-            }
         }
 
         public string ResolveGraph()
         {
-            if (!startNodeExists)
+            if (!startNodeExists())
             {
                 Debug.LogError("Start Node does not exists, graph reading is impossible");
                 return "-1";
@@ -80,6 +68,40 @@ namespace InputProvider.Graph
             return currentIMNode.MWName;
         }
 
+        public void CopyTreeReader(IPTreeReader reader)
+        {
+            if (reader.GetInputProviderGraph() != ipGraph)
+                return;
+
+            if (!reader.startNodeExists())
+            {
+                Debug.LogError("Start Node does not exists, graph copy is impossible");
+                return;
+            }
+
+            BaseNode currentNode = reader.FindNextNode(startNode, "exit");
+            if (currentNode.GetNodeType() != NodeType.InputMiddleware) return;
+
+            InputMiddlewareNode currentIMNode = (InputMiddlewareNode)currentNode;
+            while (currentIMNode.stateKeys.Count != 0)
+            {
+                string nextNode = "";
+                foreach (string key in reader.GetStateKeysList()[currentIMNode.MWName].Keys)
+                {
+                    if (reader.GetStateKeysList()[currentIMNode.MWName][key] == true)
+                    {
+                        SwitchStateKey(key, currentIMNode.MWName);
+                        nextNode = key;
+                        break;
+                    }
+                }
+
+                currentNode = reader.FindNextNode(currentIMNode, nextNode);
+                if (currentNode.GetNodeType() != NodeType.InputMiddleware) return;
+                currentIMNode = (InputMiddlewareNode)currentNode;
+            }
+        }
+
         public void SwitchStateKey(string MWName, string stateKey)
         {
             if (!stateKeysList.ContainsKey(MWName))
@@ -107,6 +129,26 @@ namespace InputProvider.Graph
             onStateKeyChanged?.Invoke(stateKey);
         }
 
+        public bool startNodeExists()
+        {
+            bool startNodeExists = false;
+            foreach (BaseNode node in ipGraph.nodes)
+            {
+                if (node.GetNodeType() == NodeType.start)
+                {
+                    startNodeExists = true;
+                    startNode = node;
+                    break;
+                }
+            }
+            return startNodeExists;
+        }
+
+        public Dictionary<string, Dictionary<string, bool>> GetStateKeysList()
+        {
+            return stateKeysList;
+        }
+
         public string GetIMSwitchesState(string MWName) //Return Input Middleware Active switch/statekey
         {
             if (!stateKeysList.ContainsKey(MWName))
@@ -124,6 +166,11 @@ namespace InputProvider.Graph
             }
 
             return res;
+        }
+
+        public InputProviderGraph GetInputProviderGraph()
+        {
+            return ipGraph;
         }
 
         private BaseNode FindNextNode(BaseNode node, string output)
