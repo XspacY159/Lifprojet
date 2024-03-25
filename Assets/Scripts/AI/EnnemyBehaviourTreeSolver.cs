@@ -84,6 +84,7 @@ public class EnnemyBTSolver : MonoBehaviour
             {
                 if (unitInRange.gameObject == unit.gameObject) continue;
                 UnitGeneral tmp = UnitManager.Instance.GetUnit(unitInRange.gameObject);
+                if(tmp == null) continue;
                 if (tmp.GetTeam() != unit.GetTeam())
                 {
                     targetUnit = tmp;

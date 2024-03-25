@@ -27546,7 +27546,7 @@ MonoBehaviour:
   unitCombat: {fileID: 1021043519}
   ressources: 0
   baseState: 0
-  currentActionPriority: 0
+  currentActionPriority: 4
   unitsLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -43542,7 +43542,7 @@ MonoBehaviour:
   controls: {fileID: 3012849379374449012}
   unitCombat: {fileID: 6571789670661119402}
   ressources: 0
-  baseState: 0
+  baseState: 2
   currentActionPriority: 0
   unitsLayer:
     serializedVersion: 2

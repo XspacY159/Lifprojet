@@ -14,6 +14,7 @@ public class GroupController
     {
         Debug.Log("group created");
         groupTree = _groupTree;
+        GroupBehaviourTreeSolver tree = _groupTree.GetComponent<GroupBehaviourTreeSolver>();
     }
 
     public Guid GetID()

@@ -137,6 +137,6 @@ public class UnitGeneral : MonoBehaviour
 
     public Collider[] UnitsInRange()
     {
-        return Physics.OverlapSphere(transform.position, unitStats.attackRange, unitsLayer);
+        return Physics.OverlapSphere(transform.position, unitStats.seekRange, unitsLayer);
     }
 }
