@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class AITeamController : TeamController
 {
@@ -7,6 +8,7 @@ public class AITeamController : TeamController
     private Dictionary<Guid, UnitMessages> messagesExchange = new Dictionary<Guid, UnitMessages>();
     //stocks the groups of the team, guid refers to groups ID
     private Dictionary<Guid, GroupController> unitsGroups = new Dictionary<Guid, GroupController>();
+    [SerializeField] private GameObject groupTreePrefab;
 
     public void SendMessageToAll(UnitMessages message)
     {
@@ -56,10 +58,15 @@ public class AITeamController : TeamController
 
     public Guid CreateGroup()
     {
-        GroupController newGroup = new GroupController();
+        GroupController newGroup = new GroupController(Instantiate(groupTreePrefab));
 
         unitsGroups.Add(newGroup.GetID(), newGroup);
         return newGroup.GetID();
+    }
+
+    public void DeleteGroup(Guid groupID)
+    {
+        Destroy(unitsGroups[groupID].GetGroupTree());
     }
 
     public void JoinGroup(UnitGeneral joiningUnit, Guid groupToJoin)

@@ -7,10 +7,13 @@ public class GroupController
 {
     private List<UnitGeneral> group = new List<UnitGeneral> ();
     private Guid groupID = System.Guid.NewGuid();
+    public int currentActionPriority;
+    private GameObject groupTree;
 
-    public GroupController()
+    public GroupController(GameObject _groupTree)
     {
         Debug.Log("group created");
+        groupTree = _groupTree;
     }
 
     public Guid GetID()
@@ -21,6 +24,11 @@ public class GroupController
     public Guid GetMessageAddress()
     {
         return group[0].GetUnitID();
+    }
+
+    public GameObject GetGroupTree()
+    { 
+        return groupTree;
     }
 
     public void AddUnit(UnitGeneral unit)

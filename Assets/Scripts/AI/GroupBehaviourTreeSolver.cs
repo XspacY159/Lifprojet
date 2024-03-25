@@ -4,9 +4,10 @@ using InputProvider.Graph;
 
 public class GroupBehaviourTreeSolver : MonoBehaviour
 {
-    private IPTreeReader tree;
+    [SerializeField] private IPTreeReader tree;
 
     private AITeamController team;
+    private GroupController group;
 
     private UnitMessages message;
 
@@ -17,15 +18,16 @@ public class GroupBehaviourTreeSolver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        reset();
+        ResetState();
+        Debug.Log("tree start");
     }
 
-    public GroupBehaviourTreeSolver(IPTreeReader _tree, AITeamController _team)
+    public void Setup(AITeamController _team, GroupController _group)
     {
-        tree = _tree;
         team = _team;
+        group = _group;
 
-        reset();
+        ResetState();
     }
 
     // Update is called once per frame
@@ -34,7 +36,7 @@ public class GroupBehaviourTreeSolver : MonoBehaviour
         solve();
     }
 
-    public void reset()
+    public void ResetState()
     {
         tree.SwitchStateKey("combatAggressive", "noAdversary");
         tree.SwitchStateKey("defending", "waiting");
