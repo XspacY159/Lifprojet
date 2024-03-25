@@ -57,6 +57,9 @@ public class UnitInteractions : MonoBehaviour
             targetPositionListIndex = UnityEngine.Random.Range(0, targetPositionList.Count);
             Vector3 target = new Vector3(targetPositionList[targetPositionListIndex].x, selectedUnits[0].transform.position.y,
                 targetPositionList[targetPositionListIndex].z);
+            target.x = Mathf.Clamp(target.x, 0, TerrainManager.Instance.GetTerrainSize().x - 1);
+            target.z = Mathf.Clamp(target.z, 0, TerrainManager.Instance.GetTerrainSize().y - 1);
+
             selectedUnits[0].GoTo(target);
 
             return;
@@ -68,6 +71,8 @@ public class UnitInteractions : MonoBehaviour
             targetPositionListIndex = (targetPositionListIndex + 1) % targetPositionList.Count;
             Vector3 target = new Vector3(targetPositionList[targetPositionListIndex].x, unit.transform.position.y,
                 targetPositionList[targetPositionListIndex].z);
+            target.x = Mathf.Clamp(target.x, 0, TerrainManager.Instance.GetTerrainSize().x - 1);
+            target.z = Mathf.Clamp(target.z, 0, TerrainManager.Instance.GetTerrainSize().y - 1);
             unit.GoTo(target);
         }
     }
