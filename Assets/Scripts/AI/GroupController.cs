@@ -10,10 +10,13 @@ public class GroupController
     public int currentActionPriority;
     private GameObject groupTree;
 
-    public GroupController(GameObject _groupTree)
+    public GroupController(GameObject _groupTree, AITeamController _team)
     {
         Debug.Log("group created");
         groupTree = _groupTree;
+
+        GroupBehaviourTreeSolver tree = groupTree.GetComponent<GroupBehaviourTreeSolver>();
+        tree.Setup(_team, this);
     }
 
     public Guid GetID()

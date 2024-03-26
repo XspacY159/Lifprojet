@@ -58,7 +58,7 @@ public class AITeamController : TeamController
 
     public Guid CreateGroup()
     {
-        GroupController newGroup = new GroupController(Instantiate(groupTreePrefab));
+        GroupController newGroup = new GroupController(Instantiate(groupTreePrefab), this);
 
         unitsGroups.Add(newGroup.GetID(), newGroup);
         return newGroup.GetID();
