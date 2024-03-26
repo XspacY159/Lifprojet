@@ -17,6 +17,7 @@ MonoBehaviour:
     moveSpeed: 2
     attackDamage: 5
     attackRange: 5
+    seekRange: 10
     attackCooldown: 3
     maxRessources: 10
   typeMaterial: {fileID: 2100000, guid: 4a055970d64e5984cb1e0f024b01e4b0, type: 2}

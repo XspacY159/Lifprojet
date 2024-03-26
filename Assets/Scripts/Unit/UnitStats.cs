@@ -7,25 +7,26 @@ public class UnitStats
     public int moveSpeed;
     public int attackDamage;
     public float attackRange;
+    public float seekRange;
     public float attackCooldown;
     public float maxRessources;
 
     private UnitStats()
     {
-        this.SetStats(0, 0, 0, 0, 0, 0);
+        this.SetStats(0, 0, 0, 0, 0, 0, 0);
     }
 
-    private UnitStats(int _health, int _moveSpeed, int _attackDamage, float _attackRange, float _maxRessources, float _attackCooldown)
+    private UnitStats(int _health, int _moveSpeed, int _attackDamage, float _attackRange, float _seekRange, float _maxRessources, float _attackCooldown)
     {
-        this.SetStats(_health, _moveSpeed, _attackDamage, _attackRange, _maxRessources, _attackCooldown);
+        this.SetStats(_health, _moveSpeed, _attackDamage, _attackRange, _seekRange, _maxRessources, _attackCooldown);
     }
 
     private UnitStats(UnitStats s2)
     {
-        this.SetStats(s2.maxHealth, s2.moveSpeed, s2.attackDamage, s2.attackRange, s2.maxRessources, s2.attackCooldown);
+        this.SetStats(s2.maxHealth, s2.moveSpeed, s2.attackDamage, s2.attackRange, s2.seekRange, s2.maxRessources, s2.attackCooldown);
     }
 
-    public void SetStats(int _health, int _moveSpeed, int _attackDamage, float _attackRange, float _maxRessources, float _attackCooldown)
+    public void SetStats(int _health, int _moveSpeed, int _attackDamage, float _attackRange, float _seekRange, float _maxRessources, float _attackCooldown)
     {
         maxHealth = _health;
         moveSpeed = _moveSpeed;
@@ -33,11 +34,12 @@ public class UnitStats
         attackRange = _attackRange;
         maxRessources = _maxRessources;
         attackCooldown = _attackCooldown;
+        seekRange = _seekRange;
     }
 
     public void SetStats(UnitStats s2)
     {
-        this.SetStats(s2.maxHealth, s2.moveSpeed, s2.attackDamage, s2.attackRange, s2.maxRessources, s2.attackCooldown);
+        this.SetStats(s2.maxHealth, s2.moveSpeed, s2.attackDamage, s2.attackRange, s2.seekRange, s2.maxRessources, s2.attackCooldown);
     }
 
     public static UnitStats operator+(UnitStats s1, UnitStats s2)
@@ -48,6 +50,7 @@ public class UnitStats
         sRes.moveSpeed = s1.moveSpeed + s2.moveSpeed;
         sRes.attackDamage = s1.attackDamage + s2.attackDamage;
         sRes.attackRange = s1.attackRange + s2.attackRange;
+        sRes.seekRange = s1.seekRange + s2.seekRange;
 
         return sRes;
     }

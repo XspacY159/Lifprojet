@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa95df7919e04bf4aaff0aee9050d328, type: 3}
-  m_Name: TestUnit
+  m_Name: MoonwolveBaseUnit
   m_EditorClassIdentifier: 
   baseStats:
     maxHealth: 20
@@ -20,4 +20,4 @@ MonoBehaviour:
     seekRange: 10
     attackCooldown: 1
     maxRessources: 10
-  typeMaterial: {fileID: 2100000, guid: 1fda93911bc94014ea72b7f5f5c11243, type: 2}
+  typeMaterial: {fileID: 2100000, guid: bfa2d8aad8dcb984d97bd7c4d9f541e6, type: 2}
