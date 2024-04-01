@@ -32,7 +32,7 @@ public class UnitMessages
         priority = _priority;
     }
 
-    //constructor specific to the group messages
+    //constructor specific to the group creation messages
     //required because guid cannot be initialized empty in the declaration
     public UnitMessages(Guid _emitter, MessageObject _messageObject, Guid _groupID, int _priority = 0)
     {

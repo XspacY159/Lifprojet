@@ -11872,6 +11872,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -24947,6 +24948,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -26261,7 +26263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.2445183
+      value: 7.35
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -27538,6 +27540,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -29546,7 +29549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.9945183
+      value: 8.1
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -32985,6 +32988,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -33918,7 +33922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.2445183
+      value: 7.35
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -43442,7 +43446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.9945183
+      value: 8.1
       objectReference: {fileID: 0}
     - target: {fileID: 1682075103610920618, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -43535,6 +43539,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -43542,7 +43547,7 @@ MonoBehaviour:
   controls: {fileID: 3012849379374449012}
   unitCombat: {fileID: 6571789670661119402}
   ressources: 0
-  baseState: 2
+  baseState: 0
   currentActionPriority: 0
   unitsLayer:
     serializedVersion: 2
@@ -43711,7 +43716,7 @@ MonoBehaviour:
   unit: {fileID: 4436293541402607537}
   team: {fileID: 1320710275}
   tree: {fileID: 7162393416978291784}
-  targetObjective: {fileID: 0}
+  targetObjective: {fileID: 2136053033}
 --- !u!114 &7162393416978291784
 MonoBehaviour:
   m_ObjectHideFlags: 0

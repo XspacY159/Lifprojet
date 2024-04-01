@@ -10,6 +10,18 @@ public class AITeamController : TeamController
     private Dictionary<Guid, GroupController> unitsGroups = new Dictionary<Guid, GroupController>();
     [SerializeField] private GameObject groupTreePrefab;
 
+    new public void RemoveUnit(UnitGeneral unit)
+    {
+        if (units.Contains(unit))
+        {
+            units.Remove(unit);
+            foreach (GroupController unitGroup in unitsGroups.Values)
+            { 
+                unitGroup.RemoveUnit(unit);
+            }
+        }
+    }
+
     public void SendMessageToAll(UnitMessages message)
     {
         foreach (UnitGeneral unit in units)

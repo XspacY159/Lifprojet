@@ -84,7 +84,7 @@ public class EnnemyBTSolver : MonoBehaviour
             {
                 if (unitInRange.gameObject == unit.gameObject) continue;
                 UnitGeneral tmp = UnitManager.Instance.GetUnit(unitInRange.gameObject);
-                if(tmp == null) continue;
+                if(tmp == null) continue;   //if absent, units that are in range of each other throw an exception on start
                 if (tmp.GetTeam() != unit.GetTeam())
                 {
                     targetUnit = tmp;
@@ -249,7 +249,7 @@ public class EnnemyBTSolver : MonoBehaviour
         }
     }
 
-    private void Roam(float maxDistance, Vector3 fixedPoint)
+    private void Roam(float maxDistance, Vector3 fixedPoint)    //move to unit controller
     {
         if (!TimerManager.StartTimer(3, "RandRoam" + unit.GetUnitID()))
         {
