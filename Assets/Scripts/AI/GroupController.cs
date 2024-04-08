@@ -12,8 +12,6 @@ public class GroupController
     public int currentActionPriority;
     private GameObject groupTree;
 
-    private int currentUnitIndex;
-
     public GroupController(GameObject _groupTree, AITeamController _team)
     {
         Debug.Log("group created");
@@ -22,8 +20,6 @@ public class GroupController
 
         GroupBehaviourTreeSolver tree = groupTree.GetComponent<GroupBehaviourTreeSolver>();
         tree.Setup(_team, this);
-
-        currentUnitIndex = 0;
     }
 
     public Guid GetID()
@@ -121,11 +117,6 @@ public class GroupController
             target.z = Mathf.Clamp(target.z, 0, TerrainManager.Instance.GetTerrainSize().y - 1);
             unit.GoTo(target);
         }
-        /*
-        foreach (UnitGeneral unit in group)
-        {
-            unit.GoTo(pos);
-        }*/
     }
 
     public UnitGeneral FindAdversary()
@@ -159,13 +150,9 @@ public class GroupController
     //this function is used to get one unit in the group for purposes like position
     public UnitGeneral GetOneUnit()
     {
-        while (currentUnitIndex < group.Count)
+        foreach (UnitGeneral unit in group)
         {
-            if (group[currentUnitIndex] != null)
-            {
-                return group[currentUnitIndex];
-            }
-            currentUnitIndex++;
+            if (unit != null) return unit;
         }
         return null;
     }

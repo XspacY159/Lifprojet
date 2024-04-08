@@ -10,7 +10,7 @@ public class AITeamController : TeamController
     private Dictionary<Guid, GroupController> unitsGroups = new Dictionary<Guid, GroupController>();
     [SerializeField] private GameObject groupTreePrefab;
 
-    new public void RemoveUnit(UnitGeneral unit)
+    public override void RemoveUnit(UnitGeneral unit)
     {
         if (units.Contains(unit))
         {

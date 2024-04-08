@@ -22,7 +22,7 @@ public class TeamController : MonoBehaviour
             units.Add(unit);
     }
 
-    public void RemoveUnit(UnitGeneral unit)
+    virtual public void RemoveUnit(UnitGeneral unit)
     {
         if (units.Contains(unit))
             units.Remove(unit);
