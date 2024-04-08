@@ -36,7 +36,8 @@ public class GroupController
         return GetOneUnit().GetUnitID();
     }
 
-    public Vector3 GetGroupPosition()
+    //gets the position of the first (non null) unit in the group
+    public Vector3 GetGroupPosition()   
     {
         UnitGeneral unit = GetOneUnit();
         if (unit != null)
@@ -45,6 +46,31 @@ public class GroupController
         }
         else
             return Vector3.zero;
+    }
+    //gets the position of the closest unit to a point
+    public UnitGeneral GetClosestUnit(Vector3 point)
+    {
+        UnitGeneral closestUnit = null;
+        float minDist = 1000;
+
+        foreach (UnitGeneral unit in group)
+        {
+            if (unit != null)
+            {
+                float dist = Vector3.Distance(unit.transform.position, point);
+                if (dist < minDist) 
+                {
+                    minDist = dist;
+                    closestUnit = unit;
+                }
+            }
+        }
+        return closestUnit;
+    }
+
+    public void TryInteract(UnitGeneral unit, POI poi)
+    {
+        unit.TryInteract(poi);
     }
 
     public GameObject GetGroupTree()
@@ -82,10 +108,24 @@ public class GroupController
 
     public void GoTo(Vector3 pos)
     {
+        List<Vector3> targetPositionList;
+        int targetPositionListIndex = 0;
+
+        targetPositionList = MathUtility.GetPositionsAround(pos, 0.2f, 0.7f, group.Count);
+        foreach (UnitGeneral unit in group)
+        {
+            targetPositionListIndex = (targetPositionListIndex + 1) % targetPositionList.Count;
+            Vector3 target = new Vector3(targetPositionList[targetPositionListIndex].x, unit.transform.position.y,
+                targetPositionList[targetPositionListIndex].z);
+            target.x = Mathf.Clamp(target.x, 0, TerrainManager.Instance.GetTerrainSize().x - 1);
+            target.z = Mathf.Clamp(target.z, 0, TerrainManager.Instance.GetTerrainSize().y - 1);
+            unit.GoTo(target);
+        }
+        /*
         foreach (UnitGeneral unit in group)
         {
             unit.GoTo(pos);
-        }
+        }*/
     }
 
     public UnitGeneral FindAdversary()
@@ -117,7 +157,7 @@ public class GroupController
     }
 
     //this function is used to get one unit in the group for purposes like position
-    private UnitGeneral GetOneUnit()
+    public UnitGeneral GetOneUnit()
     {
         while (currentUnitIndex < group.Count)
         {
@@ -128,5 +168,18 @@ public class GroupController
             currentUnitIndex++;
         }
         return null;
+    }
+
+    public void Roam(float maxDistance, Vector3 fixedPoint)    //move to unit controller
+    {
+        if (!TimerManager.StartTimer(3, "RandRoam" + GetID()))
+        {
+            float randX = Mathf.Clamp(fixedPoint.x + UnityEngine.Random.Range(-maxDistance, maxDistance),
+                0, TerrainManager.Instance.GetTerrainSize().x - 1);
+            float randZ = Mathf.Clamp(fixedPoint.z + UnityEngine.Random.Range(-maxDistance, maxDistance),
+                0, TerrainManager.Instance.GetTerrainSize().y - 1);
+            Vector3 randPos = new Vector3(randX, 0, randZ);
+            GoTo(randPos);
+        }
     }
 }
