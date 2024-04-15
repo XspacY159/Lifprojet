@@ -8,7 +8,37 @@ public class AITeamController : TeamController
     private Dictionary<Guid, UnitMessages> messagesExchange = new Dictionary<Guid, UnitMessages>();
     //stocks the groups of the team, guid refers to groups ID
     private Dictionary<Guid, GroupController> unitsGroups = new Dictionary<Guid, GroupController>();
+    //stocks the action's priorities of each units in the team
+    private Dictionary<UnitGeneral, Dictionary<AIState, int>> unitActionPriorities = new Dictionary<UnitGeneral, Dictionary<AIState, int>>();
     [SerializeField] private GameObject groupTreePrefab;
+    private Guid teamId = Guid.NewGuid();
+
+    private void OnEnable()
+    {
+        foreach (UnitGeneral unit in units)
+        {
+            Dictionary<AIState, int> priorities = new Dictionary<AIState, int>
+            {
+                { AIState.Aggressive, 0 },
+                { AIState.Defensive, 0 },
+                { AIState.FollowObjective, 0 }
+            };
+
+            priorities[unit.baseState] = unit.currentActionPriority;
+            unitActionPriorities.Add(unit, priorities);
+        }
+    }
+
+    private void Update()
+    {
+        if(!TimerManager.StartTimer(0.25f, "AI Team Priorities Refresh" + teamId))
+        {
+            foreach (UnitGeneral unit in unitActionPriorities.Keys)
+            {
+
+            }
+        }
+    }
 
     public override void RemoveUnit(UnitGeneral unit)
     {
@@ -16,7 +46,7 @@ public class AITeamController : TeamController
         {
             units.Remove(unit);
             foreach (GroupController unitGroup in unitsGroups.Values)
-            { 
+            {
                 unitGroup.RemoveUnit(unit);
             }
         }

@@ -6745,9 +6745,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62438ac604a51114fb6fa1c9ab383fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 274457948}
   unit: {fileID: 274457954}
   team: {fileID: 1320710275}
+  tree: {fileID: 274457948}
   targetObjective: {fileID: 0}
 --- !u!114 &274457950
 MonoBehaviour:
@@ -6831,6 +6831,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -7199,7 +7200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &294868275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7679,9 +7680,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62438ac604a51114fb6fa1c9ab383fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 406654455}
   unit: {fileID: 406654461}
   team: {fileID: 1320710275}
+  tree: {fileID: 406654455}
   targetObjective: {fileID: 0}
 --- !u!114 &406654457
 MonoBehaviour:
@@ -7765,6 +7766,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -18841,9 +18843,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62438ac604a51114fb6fa1c9ab383fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 656619366}
   unit: {fileID: 656619372}
   team: {fileID: 1320710275}
+  tree: {fileID: 656619366}
   targetObjective: {fileID: 0}
 --- !u!114 &656619368
 MonoBehaviour:
@@ -18927,6 +18929,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -19440,9 +19443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62438ac604a51114fb6fa1c9ab383fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 734626629}
   unit: {fileID: 734626635}
   team: {fileID: 776571737}
+  tree: {fileID: 734626629}
   targetObjective: {fileID: 0}
 --- !u!114 &734626631
 MonoBehaviour:
@@ -19526,6 +19529,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -19892,7 +19896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &776571736
 Transform:
   m_ObjectHideFlags: 0
@@ -19924,6 +19928,7 @@ MonoBehaviour:
   team: 0
   units:
   - {fileID: 734626635}
+  groupTreePrefab: {fileID: 0}
 --- !u!1 &789325938
 GameObject:
   m_ObjectHideFlags: 0
@@ -25630,7 +25635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
@@ -28650,7 +28655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
@@ -28942,7 +28947,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &1278820191
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -34381,7 +34386,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1320710275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34398,6 +34403,7 @@ MonoBehaviour:
   units:
   - {fileID: 4436293541402607537}
   - {fileID: 274457954}
+  groupTreePrefab: {fileID: 0}
 --- !u!4 &1320710276
 Transform:
   m_ObjectHideFlags: 0
@@ -37197,7 +37203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4009588426746631596, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4436293541732654057, guid: 8ef6bd77f1c78da4e8d07648e8c1fccd, type: 3}
       propertyPath: team
@@ -38800,6 +38806,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 3
   units: []
+  ressourcesCount: 0
+  maxRessources: 0
+  aliveUnitsText: {fileID: 0}
+  ressourcesText: {fileID: 0}
 --- !u!4 &1787045114
 Transform:
   m_ObjectHideFlags: 0
@@ -39303,9 +39313,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicToPlay: {fileID: 8300000, guid: 1b48ba76bea309c4aa3dc18b87140925, type: 3}
   winCondition: -1
+  defeatCondition: 0
   flagPOIList:
   - {fileID: 2136053033}
   countdown: 60
+  enemiesRemainingText: {fileID: 0}
+  capturedFlagsText: {fileID: 0}
+  timeRemainingText: {fileID: 0}
+  winScreen: {fileID: 0}
+  loseScreen: {fileID: 0}
 --- !u!4 &1878411620
 Transform:
   m_ObjectHideFlags: 0
@@ -40846,6 +40862,7 @@ MonoBehaviour:
     moveSpeed: 0
     attackDamage: 0
     attackRange: 0
+    seekRange: 0
     attackCooldown: 0
     maxRessources: 0
   type: {fileID: 11400000, guid: 9adb229805f00174c9af0643251fb8a5, type: 2}
@@ -41019,9 +41036,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62438ac604a51114fb6fa1c9ab383fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 7162393416978291784}
   unit: {fileID: 4436293541402607537}
   team: {fileID: 1320710275}
+  tree: {fileID: 7162393416978291784}
   targetObjective: {fileID: 0}
 --- !u!114 &7162393416978291784
 MonoBehaviour:

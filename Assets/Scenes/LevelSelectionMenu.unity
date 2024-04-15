@@ -1150,7 +1150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2139651918806124563, guid: 1eb72b2befd8e6448a231075f5be0eb2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: GeneralTest
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 2139651918806124563, guid: 1eb72b2befd8e6448a231075f5be0eb2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
